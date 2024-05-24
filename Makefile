@@ -6,9 +6,10 @@ ifeq ($(OS),Windows_NT)
         PLATFORM_OS = WINDOWS
         ifndef PLATFORM_SHELL
             PLATFORM_SHELL = cmd
-			LIBS += -lgdi32 -lwinmm
-			TARGET = smarciopoly.exe
         endif
+            CFLAGS += -O1 -Wall -std=c99 -Wno-missing-braces
+			LIBS += -lraylib -lopengl32 -lgdi32 -lwinmm
+			TARGET = smarciopoly.exe
     else
         UNAMEOS = $(shell uname)
         ifeq ($(UNAMEOS),Linux)
@@ -32,10 +33,12 @@ all: $(TARGET) run clean
 
 # Link the executable
 $(TARGET): $(OBJS)
-	$(COMPILER) $(OBJS) -o $(TARGET) $(LIBINCLUDE) $(LIBS)
+	echo link sbrognolo
+	$(COMPILER) $(OBJS) -o $(TARGET) $(LIBINCLUDE) $(LIBS) $(CFLAGS)
 
 # Compile .c files to .o files
 src/%.o: src/%.c
+	echo compiling sbrognolo
 	$(COMPILER) $(LIBINCLUDE) $(LIBS) $(CFLAGS) -c $< -o $@
 
 clean:
