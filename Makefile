@@ -7,7 +7,7 @@ ifeq ($(OS),Windows_NT)
         ifndef PLATFORM_SHELL
             PLATFORM_SHELL = cmd
         endif
-            CFLAGS += -O1 -Wall -std=c99 -Wno-missing-braces
+            CFLAGS += -O1 -Wall -Wno-missing-braces
 			LIBS += -lraylib -lopengl32 -lgdi32 -lwinmm
 			TARGET = smarciopoly.exe
     else

@@ -11,6 +11,7 @@
 *
 ********************************************************************************************/
 
+#include <stdlib.h>
 #include "raylib.h"
 #include "rcamera.h"
 
@@ -52,7 +53,7 @@ int main(void)
 
     DisableCursor();                    // Limit cursor to relative movement inside the window
 
-    SetTargetFPS(60);                   // Set our game to run at 60 frames-per-second
+    SetTargetFPS(0);                   // Set our game to run at 60 frames-per-second
     //--------------------------------------------------------------------------------------
 
     // Main game loop
@@ -192,6 +193,10 @@ int main(void)
         DrawText(TextFormat("- Position: (%06.3f, %06.3f, %06.3f)", camera.position.x, camera.position.y, camera.position.z), 610, 60, 10, BLACK);
         DrawText(TextFormat("- Target: (%06.3f, %06.3f, %06.3f)", camera.target.x, camera.target.y, camera.target.z), 610, 75, 10, BLACK);
         DrawText(TextFormat("- Up: (%06.3f, %06.3f, %06.3f)", camera.up.x, camera.up.y, camera.up.z), 610, 90, 10, BLACK);
+
+        char buf[64];
+        char *fps = itoa(GetFPS(), buf, 10);
+        DrawText(fps, screenWidth / 2, 10, 32, BLACK);
 
         EndDrawing();
         //----------------------------------------------------------------------------------
