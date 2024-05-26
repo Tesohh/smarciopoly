@@ -1,5 +1,5 @@
 COMPILER ?= gcc
-CFLAGS = 
+CFLAGS = -std=c2x
 LIBINCLUDE = -L lib/ -I include/
 
 ifeq ($(OS),Windows_NT)
