@@ -11,6 +11,7 @@
 *
 ********************************************************************************************/
 
+#include <cstdint>
 #include <stdlib.h>
 #include "raylib.h"
 #include "rcamera.h"
@@ -48,7 +49,7 @@ int main(void)
     {
         heights[i] = (float)GetRandomValue(1, 12);
         positions[i] = (Vector3){ (float)GetRandomValue(-15, 15), heights[i]/2.0f, (float)GetRandomValue(-15, 15) };
-        colors[i] = (Color){ GetRandomValue(20, 255), GetRandomValue(10, 55), 30, 255 };
+        colors[i] = (Color){ (uint8_t) GetRandomValue(20, 255), (uint8_t) GetRandomValue(10, 55), 30, 255 };
     }
 
     DisableCursor();                    // Limit cursor to relative movement inside the window
@@ -193,10 +194,6 @@ int main(void)
         DrawText(TextFormat("- Position: (%06.3f, %06.3f, %06.3f)", camera.position.x, camera.position.y, camera.position.z), 610, 60, 10, BLACK);
         DrawText(TextFormat("- Target: (%06.3f, %06.3f, %06.3f)", camera.target.x, camera.target.y, camera.target.z), 610, 75, 10, BLACK);
         DrawText(TextFormat("- Up: (%06.3f, %06.3f, %06.3f)", camera.up.x, camera.up.y, camera.up.z), 610, 90, 10, BLACK);
-
-        char buf[64];
-        char *fps = itoa(GetFPS(), buf, 10);
-        DrawText(fps, screenWidth / 2, 10, 32, BLACK);
 
         EndDrawing();
         //----------------------------------------------------------------------------------

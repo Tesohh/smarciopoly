@@ -1,5 +1,5 @@
-COMPILER ?= gcc
-CFLAGS = -std=c2x
+COMPILER ?= g++
+CFLAGS = -std=c++14
 LIBINCLUDE = -L lib/ -I include/
 
 ifeq ($(OS),Windows_NT)
@@ -17,7 +17,7 @@ ifeq ($(OS),Windows_NT)
         endif
         ifeq ($(UNAMEOS),Darwin)
             PLATFORM_OS = OSX
-			COMPILER = clang
+			COMPILER = clang++
 			LIBS += -framework CoreVideo -framework IOKit -framework Cocoa -framework GLUT -framework OpenGL lib/libraylib.a
 			TARGET = smarciopoly
         endif
@@ -26,8 +26,8 @@ ifeq ($(OS),Windows_NT)
         endif
     endif
 
-SRCS := $(wildcard src/*.c)
-OBJS := $(SRCS:.c=.o)
+SRCS := $(wildcard src/*.cpp)
+OBJS := $(SRCS:.cpp=.o)
 
 all: $(TARGET) run clean
 
@@ -37,7 +37,7 @@ $(TARGET): $(OBJS)
 	$(COMPILER) $(OBJS) -o $(TARGET) $(LIBINCLUDE) $(LIBS) $(CFLAGS)
 
 # Compile .c files to .o files
-src/%.o: src/%.c
+src/%.o: src/%.cpp
 	echo compiling sbrognolo
 	$(COMPILER) $(LIBINCLUDE) $(LIBS) $(CFLAGS) -c $< -o $@
 
