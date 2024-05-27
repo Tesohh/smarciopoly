@@ -14,7 +14,6 @@
 #include <cstdint>
 #include <stdlib.h>
 #include "raylib.h"
-#include "rcamera.h"
 
 #define MAX_COLUMNS 20
 
@@ -100,8 +99,6 @@ int main(void)
                 camera.up = (Vector3){ 0.0f, 1.0f, 0.0f };
                 camera.projection = CAMERA_ORTHOGRAPHIC;
                 camera.fovy = 20.0f; // near plane width in CAMERA_ORTHOGRAPHIC
-                CameraYaw(&camera, -135 * DEG2RAD, true);
-                CameraPitch(&camera, -45 * DEG2RAD, true, true, false);
             }
             else if (camera.projection == CAMERA_ORTHOGRAPHIC)
             {
@@ -173,7 +170,6 @@ int main(void)
         // Draw info boxes
         DrawRectangle(5, 5, 330, 100, Fade(SKYBLUE, 0.5f));
         DrawRectangleLines(5, 5, 330, 100, BLUE);
-
         DrawText("Camera controls:", 15, 15, 10, BLACK);
         DrawText("- Move keys: W, A, S, D, Space, Left-Ctrl", 15, 30, 10, BLACK);
         DrawText("- Look around: arrow keys or mouse", 15, 45, 10, BLACK);

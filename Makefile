@@ -1,13 +1,14 @@
 COMPILER ?= g++
-CFLAGS = -std=c++14
-LIBINCLUDE = -L lib/ -I include/
+CFLAGS = -std=c++14 -Wall -Wno-missing-braces
+LIBINCLUDE = 
 
 ifeq ($(OS),Windows_NT)
         PLATFORM_OS = WINDOWS
         ifndef PLATFORM_SHELL
             PLATFORM_SHELL = cmd
         endif
-            CFLAGS += -O1 -Wall -Wno-missing-braces
+            CFLAGS += -O1
+			LIBINCLUDE += -L lib/ -I include/
 			LIBS += -lraylib -lopengl32 -lgdi32 -lwinmm
 			TARGET = smarciopoly.exe
     else
@@ -18,7 +19,10 @@ ifeq ($(OS),Windows_NT)
         ifeq ($(UNAMEOS),Darwin)
             PLATFORM_OS = OSX
 			COMPILER = clang++
-			LIBS += -framework CoreVideo -framework IOKit -framework Cocoa -framework GLUT -framework OpenGL lib/libraylib.a
+			LIBS += -framework CoreVideo -framework IOKit -framework Cocoa -framework GLUT -framework OpenGL 
+			LIBS += $(shell pkg-config raylib --cflags --libs)
+			LIBS += $(shell pkg-config nlohmann_json --cflags)
+
 			TARGET = smarciopoly
         endif
         ifndef PLATFORM_SHELL
@@ -49,17 +53,6 @@ run:
 
 ifeq ($(PLATFORM_OS), OSX)
 setup:
-	export MACOSX_DEPLOYMENT_TARGET=10.9
-	git clone https://github.com/raysan5/raylib.git
-	cd raylib/src
-	make
-	cd ../..
-	mkdir lib
-	cp raylib/src/libraylib.a lib
-	mkdir include
-	cp raylib/src/raylib.h include
-	cp raylib/src/raymath.h include
-	cp raylib/src/rcamera.h include
-	cp raylib/src/rgestures.h include
-	cp raylib/src/utils.h include
+	brew install raylib
+	brew install nlohmann-json
 endif
