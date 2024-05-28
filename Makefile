@@ -37,12 +37,10 @@ all: $(TARGET) run clean
 
 # Link the executable
 $(TARGET): $(OBJS)
-	echo link sbrognolo
 	$(COMPILER) $(OBJS) -o $(TARGET) $(LIBINCLUDE) $(LIBS) $(CFLAGS)
 
 # Compile .c files to .o files
 src/%.o: src/%.cpp
-	echo compiling sbrognolo
 	$(COMPILER) $(LIBINCLUDE) $(LIBS) $(CFLAGS) -c $< -o $@
 
 clean:
