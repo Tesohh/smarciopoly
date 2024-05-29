@@ -1,7 +1,9 @@
 #include "imaxcamera.hpp"
 #include "raylib.h"
+#include "raymath.h"
 #include "tile.hpp"
 #include "map.hpp"
+#include <cstdio>
 
 #define NOMINAL_WIDTH  1920
 #define NOMINAL_HEIGHT 1080
@@ -15,19 +17,22 @@ int main(void) {
     SetTargetFPS(60);
 
     game::ImaxCamera cam({0}, NOMINAL_SIZE);
-    cam.setMode(game::ImaxCameraMode::DRAMATIC_FOLLOW);
-    cam.followee = Vector2{588, 882};
+    cam.mode = game::ImaxCameraMode::DRAMATIC_FOLLOW;
+    cam.target = Vector2 {0, 0};
+    cam.zoom = cam.getNormalizedZoom();
+    cam.normalize();
 
     game::Map map;
     map.tiles = game::getTiles();
     map.init();
-    for (game::Tile& tile : map.tiles) {
-        tile.debugPrint();
-    }
 
     while (!WindowShouldClose()){
-        cam.update();
         if (IsWindowResized()) cam.normalize();
+        cam.update();
+        if (IsKeyPressed(KEY_H)) {
+            cam.followee = Vector2{588, 882};
+            cam.targetZoom = 2;
+        }
 
         BeginDrawing();
         BeginMode2D(cam);
@@ -36,7 +41,6 @@ int main(void) {
             DrawRectangle(0, 0, 1920, 1080, RAYWHITE);
 
             DrawRectangle(0, 0, 1080, 1080, MONOPOLY_COLOR);
-            // DrawRectangle(882, 882, 196, 196, BLUE);
             for (game::Tile& tile : map.tiles) {
                 tile.draw();
             }

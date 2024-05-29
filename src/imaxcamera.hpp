@@ -5,7 +5,6 @@ namespace game {
 
     enum ImaxCameraMode {
         NORMAL,
-        FOLLOW,
         DRAMATIC_FOLLOW,
     };
 
@@ -19,7 +18,6 @@ namespace game {
 
         float getNormalizedZoom();
         void normalize();
-        void setMode(ImaxCameraMode mode);
         void update();
     };
 }
