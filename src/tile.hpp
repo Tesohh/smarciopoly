@@ -21,10 +21,13 @@ struct Tile {
     uint32_t cost = 0;
     std::string zone = "";
     uint8_t slotMachines = 0; // 1 slot = house, 4 slot -> shisha bar = hotel
+    
 
     void draw();
 
-    inline Tile(std::string spritePath, TileType tileType, uint32_t cost, std::string zone);
+    Tile(std::string spritePath, TileType tileType, uint32_t cost, std::string zone);
+
+    private: Texture2D texture;
 };
 
 // returns the 32 tiles
