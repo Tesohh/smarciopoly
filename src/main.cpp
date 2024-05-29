@@ -5,7 +5,7 @@
 #include "map.hpp"
 #include <cstdio>
 
-#define NOMINAL_WIDTH  1920
+#define NOMINAL_WIDTH  1080
 #define NOMINAL_HEIGHT 1080
 #define NOMINAL_SIZE   (Vector2) {NOMINAL_WIDTH, NOMINAL_HEIGHT}
 
@@ -44,9 +44,8 @@ int main(void) {
         BeginMode2D(cam);
         {
             ClearBackground(BLACK);
-            DrawRectangle(0, 0, 1920, 1080, RAYWHITE);
 
-            DrawRectangle(0, 0, 1078, 1078, MONOPOLY_COLOR);
+            DrawRectangle(0, 0, MAP_SIZE, MAP_SIZE, MONOPOLY_COLOR);
             for (game::Tile& tile : map.tiles) {
                 tile.draw();
             }

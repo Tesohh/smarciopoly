@@ -1,6 +1,7 @@
 #ifndef IMAXCAMERA_HPP
 #define IMAXCAMERA_HPP
 #include "raylib.h"
+#include "map.hpp"
 namespace game {
     #define CAMERA_MOVE_ACCELERATION 0.8f
     #define CAMERA_ZOOM_ACCELERATION 0.8f
@@ -19,6 +20,7 @@ namespace game {
         Vector2 followee;
         ImaxCameraMode mode;
         Vector2 nominalSize;
+        Vector2 scaleFactor;
         float targetZoom;
         float speed;
 

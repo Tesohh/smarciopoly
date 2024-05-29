@@ -2,6 +2,7 @@
 #include "raylib.h"
 #include "raymath.h"
 #include <cstdio>
+#include <iostream>
 
 game::ImaxCamera::ImaxCamera(Camera2D cam, Vector2 nominalSize) {
     this->target = cam.target;
@@ -17,21 +18,23 @@ game::ImaxCamera::ImaxCamera(Camera2D cam, Vector2 nominalSize) {
 float game::ImaxCamera::getNormalizedZoom() {
     Vector2 actualSize = { (float) GetScreenWidth(), (float) GetScreenHeight() };
 
-    Vector2 scaleFactor;
-    scaleFactor.x = actualSize.x / nominalSize.x;
-    scaleFactor.y = actualSize.y / nominalSize.y;
+    scaleFactor.x = actualSize.x / (nominalSize.x);
+    scaleFactor.y = actualSize.y / (nominalSize.y);
 
-    if (actualSize.x * scaleFactor.x < nominalSize.x) return scaleFactor.x;
-    else if (actualSize.x * scaleFactor.x > nominalSize.x) return 1;
-    else if (actualSize.y * scaleFactor.y < nominalSize.y) return scaleFactor.y;
-    else if (actualSize.y * scaleFactor.y > nominalSize.y) return 1;
-    else return 1;
+    if(actualSize.x > actualSize.y) return scaleFactor.y;
+    else return scaleFactor.x;
+
 }
 
 void game::ImaxCamera::normalize() {
     this->speed = 20;
-    this->followee = Vector2 {0,0};
+    this->followee = Vector2 {(float)-((GetScreenWidth()-(MAP_SIZE * getNormalizedZoom()))/(getNormalizedZoom())/2),    // freaky formula
+                              (float)-((GetScreenHeight()-(MAP_SIZE * getNormalizedZoom()))/(getNormalizedZoom())/2)};  // DO NOT TOUCH
+    std::cout<< this->followee.x <<"    "<< this->followee.y << std::endl;
+    std::cout<< GetScreenWidth() <<"    "<< MAP_SIZE*getNormalizedZoom() << std::endl;
+    std::cout<< GetScreenHeight() <<"    "<< MAP_SIZE*getNormalizedZoom() << std::endl;
     this->targetZoom = this->getNormalizedZoom();
+    this->rotation = 0;
 }
 
 void game::ImaxCamera::update(float delta) {
