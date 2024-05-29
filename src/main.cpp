@@ -26,6 +26,8 @@ int main(void) {
     map.tiles = game::getTiles();
     map.init();
 
+    Texture2D bg = LoadTexture("resources/bg.png");
+
     while (!WindowShouldClose()){
         if (IsWindowResized()) cam.normalize();
         cam.update(GetFrameTime());
@@ -44,7 +46,7 @@ int main(void) {
         BeginMode2D(cam);
         {
             ClearBackground(BLACK);
-            DrawRectangle(0, 0, 1920, 1080, RAYWHITE);
+            DrawTexture(bg, 0, 0, WHITE);
 
             DrawRectangle(0, 0, 1078, 1078, MONOPOLY_COLOR);
             for (game::Tile& tile : map.tiles) {
