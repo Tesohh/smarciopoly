@@ -2,7 +2,6 @@
 #include "raylib.h"
 #include "raymath.h"
 #include <cstdio>
-#include <iostream>
 
 game::ImaxCamera::ImaxCamera(Camera2D cam, Vector2 nominalSize) {
     this->target = cam.target;
@@ -30,11 +29,7 @@ void game::ImaxCamera::normalize() {
     this->speed = 20;
     this->followee = Vector2 {(float)-((GetScreenWidth()-(MAP_SIZE * getNormalizedZoom()))/(getNormalizedZoom())/2),    // freaky formula
                               (float)-((GetScreenHeight()-(MAP_SIZE * getNormalizedZoom()))/(getNormalizedZoom())/2)};  // DO NOT TOUCH
-    std::cout<< this->followee.x <<"    "<< this->followee.y << std::endl;
-    std::cout<< GetScreenWidth() <<"    "<< MAP_SIZE*getNormalizedZoom() << std::endl;
-    std::cout<< GetScreenHeight() <<"    "<< MAP_SIZE*getNormalizedZoom() << std::endl;
     this->targetZoom = this->getNormalizedZoom();
-    this->rotation = 0;
 }
 
 void game::ImaxCamera::update(float delta) {
