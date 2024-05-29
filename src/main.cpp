@@ -5,7 +5,7 @@
 #include "map.hpp"
 #include <cstdio>
 
-#define NOMINAL_WIDTH  1080
+#define NOMINAL_WIDTH  1920
 #define NOMINAL_HEIGHT 1080
 #define NOMINAL_SIZE   (Vector2) {NOMINAL_WIDTH, NOMINAL_HEIGHT}
 
@@ -26,6 +26,8 @@ int main(void) {
     map.tiles = game::getTiles();
     map.init();
 
+    Texture2D bg = LoadTexture("resources/bg.png");
+
     while (!WindowShouldClose()){
         if (IsWindowResized()) cam.normalize();
         cam.update(GetFrameTime());
@@ -44,6 +46,7 @@ int main(void) {
         BeginMode2D(cam);
         {
             ClearBackground(BLACK);
+            DrawTexture(bg, 0, 0, WHITE);
 
             DrawRectangle(0, 0, MAP_SIZE, MAP_SIZE, MONOPOLY_COLOR);
             for (game::Tile& tile : map.tiles) {
