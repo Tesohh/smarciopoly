@@ -2,6 +2,11 @@
 #define IMAXCAMERA_HPP
 #include "raylib.h"
 namespace game {
+    #define CAMERA_MOVE_ACCELERATION 0.8f
+    #define CAMERA_ZOOM_ACCELERATION 0.8f
+    #define CAMERA_MOVE_MIN 2
+    #define CAMERA_ZOOM_MIN 0.5f
+    #define CAMERA_DEFAULT_SPEED 10
 
     enum ImaxCameraMode {
         NORMAL,
@@ -15,10 +20,11 @@ namespace game {
         ImaxCameraMode mode;
         Vector2 nominalSize;
         float targetZoom;
+        float speed;
 
         float getNormalizedZoom();
         void normalize();
-        void update();
+        void update(float delta);
     };
 }
 

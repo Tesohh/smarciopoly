@@ -28,11 +28,17 @@ int main(void) {
 
     while (!WindowShouldClose()){
         if (IsWindowResized()) cam.normalize();
-        cam.update();
-        if (IsKeyPressed(KEY_H)) {
+        cam.update(GetFrameTime());
+        if (IsKeyPressed(KEY_G)) {
+            cam.speed = 5;
             cam.followee = Vector2{588, 882};
             cam.targetZoom = 2;
         }
+        if (IsKeyDown(KEY_H)) cam.followee.x -= 100;
+        if (IsKeyDown(KEY_J)) cam.followee.y += 100;
+        if (IsKeyDown(KEY_K)) cam.followee.y -= 100;
+        if (IsKeyDown(KEY_L)) cam.followee.x += 100;
+        if (IsKeyDown(KEY_R)) cam.normalize();
 
         BeginDrawing();
         BeginMode2D(cam);
@@ -40,7 +46,7 @@ int main(void) {
             ClearBackground(BLACK);
             DrawRectangle(0, 0, 1920, 1080, RAYWHITE);
 
-            DrawRectangle(0, 0, 1080, 1080, MONOPOLY_COLOR);
+            DrawRectangle(0, 0, 1078, 1078, MONOPOLY_COLOR);
             for (game::Tile& tile : map.tiles) {
                 tile.draw();
             }

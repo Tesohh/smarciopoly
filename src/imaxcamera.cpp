@@ -11,6 +11,7 @@ game::ImaxCamera::ImaxCamera(Camera2D cam, Vector2 nominalSize) {
 
     this->nominalSize = nominalSize;
     this->targetZoom = cam.zoom;
+    this->speed = CAMERA_DEFAULT_SPEED;
 }
 
 float game::ImaxCamera::getNormalizedZoom() {
@@ -28,11 +29,12 @@ float game::ImaxCamera::getNormalizedZoom() {
 }
 
 void game::ImaxCamera::normalize() {
+    this->speed = 20;
     this->followee = Vector2 {0,0};
     this->targetZoom = this->getNormalizedZoom();
 }
 
-void game::ImaxCamera::update() {
+void game::ImaxCamera::update(float delta) {
     switch (this->mode) {
         case game::ImaxCameraMode::NORMAL:
             break;
@@ -42,12 +44,14 @@ void game::ImaxCamera::update() {
 
             float zoomDiff = this->targetZoom - this->zoom;
 
-            if (posDistance > 10 || zoomDiff != 0) {
-                std::printf("mving\n");
-                float posSpeed = fmaxf(0.8*posDistance, 2) * 0.1;
+            if (posDistance > 0) {
+                float posSpeed = fmaxf(CAMERA_MOVE_ACCELERATION*posDistance, CAMERA_MOVE_MIN) * delta * speed;
                 this->target = Vector2Add(this->target, Vector2Scale(posDiff, posSpeed/posDistance));
+                if (posDistance < 1) this->target = this->followee;
+            }
 
-                float zoomSpeed = fmaxf(0.8*zoomDiff, 1) * 0.1;
+            if (zoomDiff != 0) {
+                float zoomSpeed = fmaxf(CAMERA_ZOOM_ACCELERATION*zoomDiff, CAMERA_ZOOM_MIN) * delta * speed;
                 this->zoom += zoomDiff * zoomSpeed;
             }
             break;
