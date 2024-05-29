@@ -5,7 +5,7 @@
 #include "map.hpp"
 #include <cstdio>
 
-#define NOMINAL_WIDTH  1920
+#define NOMINAL_WIDTH  1080
 #define NOMINAL_HEIGHT 1080
 #define NOMINAL_SIZE   (Vector2) {NOMINAL_WIDTH, NOMINAL_HEIGHT}
 
@@ -46,7 +46,12 @@ int main(void) {
         BeginMode2D(cam);
         {
             ClearBackground(BLACK);
-            DrawTexture(bg, 0, 0, WHITE);
+            //PERF: smerdolox (unefficient background drawing)
+            for (int y = -10800; y < 10800; y += bg.height) {
+                for (int x = -10800; x < 10800; x += bg.width) {
+                    DrawTexture(bg, x, y, WHITE);
+                }
+            }
 
             DrawRectangle(0, 0, MAP_SIZE, MAP_SIZE, MONOPOLY_COLOR);
             for (game::Tile& tile : map.tiles) {
@@ -58,6 +63,7 @@ int main(void) {
 
     }
 
+    UnloadTexture(bg);
     CloseWindow();
     return 0;
 }
