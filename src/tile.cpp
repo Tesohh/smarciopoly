@@ -15,7 +15,7 @@ game::Tile::Tile(std::string spritePath, int x, int y, int rotation, TileType ti
 }
 
 void game::Tile::debugPrint() {
-        std::printf("TYPE: %d, ROT: %d, X: %f, Y: %f\n", this->tileType, this->rotation, this->pos.x, this->pos.y);
+    std::printf("TYPE: %d, ROT: %d, X: %f, Y: %f\n", this->tileType, this->rotation, this->pos.x, this->pos.y);
 }
 
 void game::Tile::draw() {

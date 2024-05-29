@@ -1,4 +1,4 @@
-#include "camerautils.hpp"
+#include "imaxcamera.hpp"
 #include "raylib.h"
 #include "tile.hpp"
 #include "map.hpp"
@@ -14,8 +14,9 @@ int main(void) {
     InitWindow(1080, 720, "Smarciopoly");
     SetTargetFPS(60);
 
-    Camera2D cam = {0};
-    game::normalizeCamera(&cam, NOMINAL_SIZE);
+    game::ImaxCamera cam({0}, NOMINAL_SIZE);
+    cam.setMode(game::ImaxCameraMode::DRAMATIC_FOLLOW);
+    cam.followee = Vector2{588, 882};
 
     game::Map map;
     map.tiles = game::getTiles();
@@ -25,7 +26,8 @@ int main(void) {
     }
 
     while (!WindowShouldClose()){
-        if (IsWindowResized()) game::normalizeCamera(&cam, NOMINAL_SIZE);
+        cam.update();
+        if (IsWindowResized()) cam.normalize();
 
         BeginDrawing();
         BeginMode2D(cam);
