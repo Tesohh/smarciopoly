@@ -8,7 +8,10 @@
 namespace game {
 
 enum TileType {
-    GO,
+    START,
+    PRISON,
+    AWARDS,
+    POLICE,
     PROPERTY,
 };
 
@@ -16,6 +19,7 @@ struct Tile {
     Vector2 pos = {0, 0};
     uint32_t rotation = 0;
     Image sprite;
+    std::string spritePath;
 
     TileType tileType = TileType::PROPERTY;
     uint32_t cost = 0;
@@ -24,11 +28,14 @@ struct Tile {
     
 
     void draw();
+    void updateTexture();
     void debugPrint();
 
     Tile(std::string spritePath, int x, int y, int rotation, TileType tileType, uint32_t cost, std::string zone);
 
-    private: Texture2D texture;
+    private: 
+        Texture2D texture;
+        Image editedImage;
 };
 
 // returns the 32 tiles

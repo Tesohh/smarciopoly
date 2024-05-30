@@ -4,6 +4,7 @@
 #include "tile.hpp"
 #include "map.hpp"
 #include <cstdio>
+#include <iostream>
 
 #define NOMINAL_WIDTH  4320
 #define NOMINAL_HEIGHT 4320
@@ -24,6 +25,9 @@ int main(void) {
 
     game::Map map;
     map.tiles = game::getTiles();
+    // for (auto& tile : map.tiles) {
+    //     std::cout << tile.spritePath << std::endl;
+    // }
     map.init();
 
     Texture2D bg = LoadTexture("resources/bg.png");
@@ -41,6 +45,9 @@ int main(void) {
         if (IsKeyDown(KEY_K)) cam.followee.y -= 100;
         if (IsKeyDown(KEY_L)) cam.followee.x += 100;
         if (IsKeyDown(KEY_R)) cam.normalize();
+
+        map.tiles[3].cost += 1;
+        map.tiles[3].updateTexture();
 
         BeginDrawing();
         BeginMode2D(cam);
