@@ -27,7 +27,6 @@ void game::Tile::updateTexture() {
     this->editedImage = ImageCopy(this->sprite);
     ImageDrawText(&this->editedImage, std::to_string(this->cost).c_str(), 0, 0, 128, BLACK);
 
-    UnloadTexture(this->texture);
     this->texture = LoadTextureFromImage(this->editedImage);
 }
 

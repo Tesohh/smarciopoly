@@ -46,8 +46,6 @@ int main(void) {
         if (IsKeyDown(KEY_L)) cam.followee.x += 100;
         if (IsKeyDown(KEY_R)) cam.normalize();
 
-        map.tiles[3].cost += 1;
-        map.tiles[3].updateTexture();
 
         BeginDrawing();
         BeginMode2D(cam);
@@ -64,6 +62,7 @@ int main(void) {
             for (game::Tile& tile : map.tiles) {
                 tile.draw();
             }
+
             DrawFPS(-500, -500);
         }
         EndMode2D();

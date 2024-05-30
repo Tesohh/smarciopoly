@@ -32,9 +32,9 @@ struct Tile {
     void debugPrint();
 
     Tile(std::string spritePath, int x, int y, int rotation, TileType tileType, uint32_t cost, std::string zone);
-
+    
+    Texture2D texture;
     private: 
-        Texture2D texture;
         Image editedImage;
 };
 
