@@ -1,7 +1,7 @@
 #include "tile.hpp"
 #include "raylib.h"
 #include <cstdio>
-#include <type_traits>
+#include <string>
 #include <vector>
 
 game::Tile::Tile(std::string spritePath, int x, int y, int rotation, TileType tileType, uint32_t cost, std::string zone) {
@@ -23,9 +23,22 @@ void game::Tile::debugPrint() {
 
 void game::Tile::updateTexture() { 
     // PERF: image and texture should be unlaoded
-
     this->editedImage = ImageCopy(this->sprite);
-    ImageDrawText(&this->editedImage, std::to_string(this->cost).c_str(), 0, 0, 128, BLACK);
+
+    if (this->tileType == TileType::PROPERTY) {
+        std::string str = "$" + std::to_string(this->cost);
+        int textWidth = MeasureText(str.c_str(), 110);
+        int textX = this->editedImage.width / 2 - textWidth / 2;
+
+        ImageDrawText(&this->editedImage, str.c_str(), textX, 655, 110, BLACK);
+        // ImageDrawTextEx(&this->editedImage,
+        //                 LoadFont("resources/fonts/karantina.ttf"),
+        //                 std::to_string(this->cost).c_str(),
+        //                 Vector2{0,0},
+        //                 128,
+        //                 0,
+        //                 BLACK);
+    }
 
     this->texture = LoadTextureFromImage(this->editedImage);
 }

@@ -17,6 +17,8 @@ int main(void) {
     InitWindow(1080, 720, "Smarciopoly");
     SetTargetFPS(60);
 
+    Texture2D bg = LoadTexture("resources/bg.png");
+
     game::ImaxCamera cam({0}, NOMINAL_SIZE);
     cam.mode = game::ImaxCameraMode::DRAMATIC_FOLLOW;
     cam.target = Vector2 {0, 0};
@@ -25,12 +27,8 @@ int main(void) {
 
     game::Map map;
     map.tiles = game::getTiles();
-    // for (auto& tile : map.tiles) {
-    //     std::cout << tile.spritePath << std::endl;
-    // }
     map.init();
 
-    Texture2D bg = LoadTexture("resources/bg.png");
 
     while (!WindowShouldClose()){
         if (IsWindowResized()) cam.normalize();
