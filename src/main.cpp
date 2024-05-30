@@ -5,8 +5,8 @@
 #include "map.hpp"
 #include <cstdio>
 
-#define NOMINAL_WIDTH  1080
-#define NOMINAL_HEIGHT 1080
+#define NOMINAL_WIDTH  4320
+#define NOMINAL_HEIGHT 4320
 #define NOMINAL_SIZE   (Vector2) {NOMINAL_WIDTH, NOMINAL_HEIGHT}
 
 const Color MONOPOLY_COLOR = GetColor(0xC2FFCCFF);
@@ -33,8 +33,8 @@ int main(void) {
         cam.update(GetFrameTime());
         if (IsKeyPressed(KEY_G)) {
             cam.speed = 5;
-            cam.followee = Vector2{588, 882};
-            cam.targetZoom = 2;
+            // cam.followee = Vector2{588, 882};
+            cam.targetZoom = 1.2f;
         }
         if (IsKeyDown(KEY_H)) cam.followee.x -= 100;
         if (IsKeyDown(KEY_J)) cam.followee.y += 100;
@@ -46,7 +46,7 @@ int main(void) {
         BeginMode2D(cam);
         {
             ClearBackground(BLACK);
-            //PERF: smerdolox (unefficient background drawing)
+            // PERF: smerdolox (unefficient background drawing)
             for (int y = -10800; y < 10800; y += bg.height) {
                 for (int x = -10800; x < 10800; x += bg.width) {
                     DrawTexture(bg, x, y, WHITE);
@@ -57,6 +57,7 @@ int main(void) {
             for (game::Tile& tile : map.tiles) {
                 tile.draw();
             }
+            DrawFPS(-500, -500);
         }
         EndMode2D();
         EndDrawing();
