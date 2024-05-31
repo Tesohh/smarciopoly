@@ -39,9 +39,9 @@ int main(void) {
             // cam.followee = Vector2{588, 882};
             cam.targetZoom = 1.2f;
         }
-        if (IsKeyDown(KEY_H)) cam.followee.x -= 100;
-        if (IsKeyDown(KEY_J)) cam.followee.y += 100;
-        if (IsKeyDown(KEY_K)) cam.followee.y -= 100;
+        if (IsKeyDown(KEY_J)) cam.followee.x -= 100;
+        if (IsKeyDown(KEY_K)) cam.followee.y += 100;
+        if (IsKeyDown(KEY_I)) cam.followee.y -= 100;
         if (IsKeyDown(KEY_L)) cam.followee.x += 100;
         if (IsKeyDown(KEY_R)) cam.normalize();
 
