@@ -6,6 +6,10 @@
 #include <vector>
 
 namespace game {
+#define BORDER_OVERHANG 8   // extra border in each direction
+
+#define TILE_WIDTH 392      // without 2 * BORDER_OVERHANG
+#define TILE_HEIGHT 784     // without 2 * BORDER_OVERHANG
 
 enum TileType {
     START,

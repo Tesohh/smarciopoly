@@ -4,7 +4,7 @@
 #include "tile.hpp"
 #include <vector>
 namespace game {
-#define MAP_SIZE 4320
+#define MAP_SIZE 4312
 
 struct Map {
     std::vector<Tile> tiles;
