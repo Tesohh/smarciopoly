@@ -6,8 +6,8 @@
 #include <cstdio>
 #include <iostream>
 
-#define NOMINAL_WIDTH  4312
-#define NOMINAL_HEIGHT 4312
+#define NOMINAL_WIDTH MAP_SIZE
+#define NOMINAL_HEIGHT MAP_SIZE
 #define NOMINAL_SIZE   (Vector2) {NOMINAL_WIDTH, NOMINAL_HEIGHT}
 
 const Color MONOPOLY_COLOR = GetColor(0xC2FFCCFF);
