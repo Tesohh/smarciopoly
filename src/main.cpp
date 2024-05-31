@@ -14,6 +14,7 @@ const Color MONOPOLY_COLOR = GetColor(0xC2FFCCFF);
 
 int main(void) {
     SetConfigFlags(FLAG_WINDOW_RESIZABLE);
+    SetConfigFlags(FLAG_MSAA_4X_HINT);
     InitWindow(1080, 720, "Smarciopoly");
     SetTargetFPS(60);
 

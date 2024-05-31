@@ -41,6 +41,7 @@ void game::Tile::updateTexture() {
     }
 
     this->texture = LoadTextureFromImage(this->editedImage);
+    SetTextureFilter(this->texture, TEXTURE_FILTER_BILINEAR);
 }
 
 void game::Tile::draw() {
