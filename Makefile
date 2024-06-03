@@ -1,4 +1,5 @@
 COMPILER ?= g++
+DEBUGGER = gdb
 CFLAGS = -std=c++14 -Wall -Wno-missing-braces
 LIBINCLUDE = 
 
@@ -19,6 +20,7 @@ ifeq ($(OS),Windows_NT)
         ifeq ($(UNAMEOS),Darwin)
             PLATFORM_OS = OSX
 			COMPILER = clang++
+			DEBUGGER = lldb
 			LIBS += -framework CoreVideo -framework IOKit -framework Cocoa -framework GLUT -framework OpenGL 
 			LIBS += $(shell pkg-config raylib --cflags --libs)
 			LIBS += $(shell pkg-config nlohmann_json --cflags)
@@ -34,6 +36,7 @@ SRCS := $(wildcard src/*.cpp)
 OBJS := $(SRCS:.cpp=.o)
 
 all: $(TARGET) run clean
+debug: $(TARGET) rungdb clean
 
 # Link the executable
 $(TARGET): $(OBJS)
@@ -48,6 +51,9 @@ clean:
 
 run:
 	./$(TARGET)
+
+rungdb:
+	$(DEBUGGER) ./$(TARGET)
 
 ifeq ($(PLATFORM_OS), OSX)
 setup:

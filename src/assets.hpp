@@ -6,6 +6,7 @@ namespace game {
     struct _FontAssets {
         Font uiFont; 
 
+        // not a constructor as init needs to be called after InitWindow
         void init();
         ~_FontAssets();
     };
