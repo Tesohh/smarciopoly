@@ -1,5 +1,7 @@
 #include "tile.hpp"
+#include "assets.hpp"
 #include "raylib.h"
+#include <cstddef>
 #include <cstdio>
 #include <string>
 #include <vector>
@@ -26,13 +28,16 @@ void game::Tile::updateTexture() {
     this->editedImage = ImageCopy(this->sprite);
 
     if (this->tileType == TileType::PROPERTY) {
+        std::printf("FANTASTIC");
+
         std::string str = "$" + std::to_string(this->cost);
         int textWidth = MeasureText(str.c_str(), 110);
         int textX = this->editedImage.width / 2 - textWidth / 2;
 
-        ImageDrawText(&this->editedImage, str.c_str(), textX, 670, 100, BLACK);
+
+        // ImageDrawText(&this->editedImage, str.c_str(), textX, 670, 100, BLACK);
         // ImageDrawTextEx(&this->editedImage,
-        //                 LoadFont("resources/fonts/karantina.ttf"),
+        //                 game::fonts.uiFont,
         //                 std::to_string(this->cost).c_str(),
         //                 Vector2{0,0},
         //                 128,
