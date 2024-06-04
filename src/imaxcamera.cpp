@@ -12,6 +12,7 @@ game::ImaxCamera::ImaxCamera(Camera2D cam, Vector2 nominalSize) {
 
     this->nominalSize = nominalSize;
     this->targetZoom = cam.zoom;
+//    this->targetRotation = cam.rotation;
     this->speed = CAMERA_DEFAULT_SPEED;
 }
 
@@ -28,28 +29,26 @@ float game::ImaxCamera::getNormalizedZoom() {
 
 void game::ImaxCamera::normalize() {
     this->speed = 20;
-//    this->followee = Vector2 {(float)-((GetScreenWidth()-(MAP_SIZE * getNormalizedZoom()))/(getNormalizedZoom())/2),    // freaky formula
-//                              (float)-((GetScreenHeight()-(MAP_SIZE * getNormalizedZoom()))/(getNormalizedZoom())/2)};  // DO NOT TOUCH
 
-    this->followee = Vector2 {
-        MAP_SIZE/2,
-        MAP_SIZE/2
-    };
+    Vector2 mapCenter = (Vector2){MAP_SIZE/2.0f,MAP_SIZE/2.0f};
+    Vector2 screenCenter = (Vector2){GetScreenWidth()/2.0f, GetScreenHeight()/2.0f};
+
+    this->offset = screenCenter;
+    this->target = mapCenter;
+    this->followee = target;
 
     this->targetZoom = this->getNormalizedZoom();
-    this->rotation = 0;
 }
 
 void game::ImaxCamera::rotate(int direction) {
-
-    this->target =(Vector2){GetScreenWidth()/2.0f, GetScreenHeight()/2.0f};
-
     switch (direction) {
         case CLOCKWISE:
-            this->rotation += 90;
+//            this->targetRotation +=90;
+            this->rotation +=90;
             break;
         case ANTICLOCKWISE:
-            this->rotation -= 90;
+//            this->targetRotation -= 90;
+            this->rotation -=90;
             break;
         default:
             break;
@@ -62,6 +61,7 @@ void game::ImaxCamera::update(float delta) {
             break;
         case game::ImaxCameraMode::DRAMATIC_FOLLOW:
             Vector2 posDiff = Vector2Subtract(this->followee, this->target);
+//            float rotDiff = abs(targetRotation - rotation);
             float posDistance = Vector2Length(posDiff);
 
             float zoomDiff = this->targetZoom - this->zoom;
@@ -76,6 +76,13 @@ void game::ImaxCamera::update(float delta) {
                 float zoomSpeed = fmaxf(CAMERA_ZOOM_ACCELERATION*zoomDiff, CAMERA_ZOOM_MIN) * delta * speed;
                 this->zoom += zoomDiff * zoomSpeed;
             }
+
+            /*
+            if(rotDiff > 0) {
+                float rotSpeed = fmaxf(CAMERA_ROTATION_ACCELERATION*rotDiff, CAMERA_ROTATION_MIN) * delta * speed;
+                this->rotation += rotDiff * rotSpeed;
+            }
+            */
             break;
     }
 }
