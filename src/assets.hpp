@@ -8,7 +8,7 @@ namespace game {
 
         // not a constructor as init needs to be called after InitWindow
         void init();
-        ~_FontAssets();
+        void deinit();
     };
 
     extern _FontAssets fonts;

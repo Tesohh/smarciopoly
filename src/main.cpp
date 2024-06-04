@@ -1,11 +1,9 @@
 #include "imaxcamera.hpp"
 #include "raylib.h"
-#include "raymath.h"
+#include "state.hpp"
 #include "tile.hpp"
 #include "map.hpp"
 #include "assets.hpp"
-#include <cstdio>
-#include <iostream>
 
 #define NOMINAL_WIDTH MAP_SIZE
 #define NOMINAL_HEIGHT MAP_SIZE
@@ -24,34 +22,34 @@ int main(void) {
 
     Texture2D bg = LoadTexture("resources/bg.png");
 
-    game::ImaxCamera cam({0}, NOMINAL_SIZE);
-    cam.mode = game::ImaxCameraMode::DRAMATIC_FOLLOW;
-    cam.target = Vector2 {0, 0};
-    cam.zoom = cam.getNormalizedZoom();
-    cam.normalize();
+    game::state.camera = game::ImaxCamera({0}, NOMINAL_SIZE);
+    game::state.camera.mode = game::ImaxCameraMode::DRAMATIC_FOLLOW;
+    game::state.camera.target = Vector2 {0, 0};
+    game::state.camera.zoom = game::state.camera.getNormalizedZoom();
+    game::state.camera.normalize();
 
-    game::Map map;
-    map.tiles = game::getTiles();
-    map.init();
+    game::state.map = game::Map();
+    game::state.map.tiles = game::getTiles();
+    game::state.map.init();
 
 
     while (!WindowShouldClose()){
-        if (IsWindowResized()) cam.normalize();
-        cam.update(GetFrameTime());
+        if (IsWindowResized()) game::state.camera.normalize();
+        game::state.camera.update(GetFrameTime());
         if (IsKeyPressed(KEY_G)) {
-            cam.speed = 5;
-            // cam.followee = Vector2{588, 882};
-            cam.targetZoom = 1.2f;
+            game::state.camera.speed = 5;
+            // game::state.camera.followee = Vector2{588, 882};
+            game::state.camera.targetZoom = 1.2f;
         }
-        if (IsKeyDown(KEY_J)) cam.followee.x -= 100;
-        if (IsKeyDown(KEY_K)) cam.followee.y += 100;
-        if (IsKeyDown(KEY_I)) cam.followee.y -= 100;
-        if (IsKeyDown(KEY_L)) cam.followee.x += 100;
-        if (IsKeyDown(KEY_R)) cam.normalize();
+        if (IsKeyDown(KEY_J)) game::state.camera.followee.x -= 100;
+        if (IsKeyDown(KEY_K)) game::state.camera.followee.y += 100;
+        if (IsKeyDown(KEY_I)) game::state.camera.followee.y -= 100;
+        if (IsKeyDown(KEY_L)) game::state.camera.followee.x += 100;
+        if (IsKeyDown(KEY_R)) game::state.camera.normalize();
 
 
         BeginDrawing();
-        BeginMode2D(cam);
+        BeginMode2D(game::state.camera);
         {
             ClearBackground(BLACK);
             // PERF: smerdolox (unefficient background drawing)
@@ -62,7 +60,7 @@ int main(void) {
             }
 
             DrawRectangle(0, 0, MAP_SIZE, MAP_SIZE, MONOPOLY_COLOR);
-            for (game::Tile& tile : map.tiles) {
+            for (game::Tile& tile : game::state.map.tiles) {
                 tile.draw();
             }
 
@@ -74,6 +72,8 @@ int main(void) {
     }
 
     UnloadTexture(bg);
+    game::fonts.deinit();
+
     CloseWindow();
     return 0;
 }
