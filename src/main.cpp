@@ -73,6 +73,7 @@ int main(void) {
 
     UnloadTexture(bg);
     game::fonts.deinit();
+    game::state.deinit();
 
     CloseWindow();
     return 0;

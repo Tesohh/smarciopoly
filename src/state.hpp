@@ -11,7 +11,7 @@ namespace game {
         Map map;
         
         _State();
-        ~_State();
+        void deinit();
     };
 
     extern _State state;

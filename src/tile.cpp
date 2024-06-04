@@ -1,5 +1,6 @@
 #include "tile.hpp"
 #include "assets.hpp"
+#include "hover.hpp"
 #include "raylib.h"
 #include <cstddef>
 #include <cstdio>
@@ -32,9 +33,6 @@ void game::Tile::updateTexture() {
         int textWidth = MeasureTextEx(game::fonts.uiFont, str.c_str(), 110, 0).x;
         int textX = this->editedImage.width / 2 - textWidth / 2;
 
-
-        // ImageDrawText(&this->editedImage, str.c_str(), textX, 670, 100, BLACK);
-
         ImageDrawTextEx(&this->editedImage,
                         game::fonts.uiFont,
                         str.c_str(),
@@ -50,6 +48,9 @@ void game::Tile::updateTexture() {
 
 void game::Tile::draw() {
     DrawTextureEx(this->texture, this->pos, this->rotation, 1.0f, WHITE);
+
+    if (IsHovered(Rectangle {.x = this->pos.x, .y = this->pos.y, .width = 1000, .height = 1000}))
+        printf("HOVERING\n");
 };
 
 std::vector<game::Tile> game::getTiles() {
