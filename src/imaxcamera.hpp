@@ -14,6 +14,11 @@ namespace game {
         DRAMATIC_FOLLOW,
     };
 
+    enum ImaxCameraRotation {
+        CLOCKWISE,
+        ANTICLOCKWISE,
+    };
+
     struct ImaxCamera : Camera2D {
         ImaxCamera(Camera2D cam, Vector2 nominalSize);
 
@@ -26,6 +31,7 @@ namespace game {
 
         float getNormalizedZoom();
         void normalize();
+        void rotate(int direction);
         void update(float delta);
     };
 }

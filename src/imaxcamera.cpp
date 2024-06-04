@@ -28,10 +28,32 @@ float game::ImaxCamera::getNormalizedZoom() {
 
 void game::ImaxCamera::normalize() {
     this->speed = 20;
-    this->followee = Vector2 {(float)-((GetScreenWidth()-(MAP_SIZE * getNormalizedZoom()))/(getNormalizedZoom())/2),    // freaky formula
-                              (float)-((GetScreenHeight()-(MAP_SIZE * getNormalizedZoom()))/(getNormalizedZoom())/2)};  // DO NOT TOUCH
+//    this->followee = Vector2 {(float)-((GetScreenWidth()-(MAP_SIZE * getNormalizedZoom()))/(getNormalizedZoom())/2),    // freaky formula
+//                              (float)-((GetScreenHeight()-(MAP_SIZE * getNormalizedZoom()))/(getNormalizedZoom())/2)};  // DO NOT TOUCH
+
+    this->followee = Vector2 {
+        MAP_SIZE/2,
+        MAP_SIZE/2
+    };
+
     this->targetZoom = this->getNormalizedZoom();
     this->rotation = 0;
+}
+
+void game::ImaxCamera::rotate(int direction) {
+
+    this->target =(Vector2){GetScreenWidth()/2.0f, GetScreenHeight()/2.0f};
+
+    switch (direction) {
+        case CLOCKWISE:
+            this->rotation += 90;
+            break;
+        case ANTICLOCKWISE:
+            this->rotation -= 90;
+            break;
+        default:
+            break;
+    }
 }
 
 void game::ImaxCamera::update(float delta) {
