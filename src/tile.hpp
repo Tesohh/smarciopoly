@@ -39,6 +39,7 @@ struct Tile {
     
     Texture2D texture;
     private: 
+        Rectangle rect;
         Image editedImage;
 };
 

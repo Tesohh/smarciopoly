@@ -17,7 +17,10 @@ game::Tile::Tile(std::string spritePath, int x, int y, int rotation, TileType ti
     this->cost = cost;
     this->zone = zone;
 
-    updateTexture();
+    this->rect = Rectangle {this->pos.x, this->pos.y, TILE_WIDTH, TILE_HEIGHT};
+    this->rect = RotateRectangle(this->rect, this->rotation);
+
+    this->updateTexture();
 }
 
 void game::Tile::debugPrint() {
@@ -49,8 +52,8 @@ void game::Tile::updateTexture() {
 void game::Tile::draw() {
     DrawTextureEx(this->texture, this->pos, this->rotation, 1.0f, WHITE);
 
-    if (IsHovered(Rectangle {.x = this->pos.x, .y = this->pos.y, .width = 1000, .height = 1000}))
-        printf("HOVERING\n");
+    if (IsHovered(this->rect))
+        printf("HOVERING %s\n", this->spritePath.c_str());
 };
 
 std::vector<game::Tile> game::getTiles() {
