@@ -2,6 +2,7 @@
 #include "assets.hpp"
 #include "hover.hpp"
 #include "raylib.h"
+#include "smarciomath.hpp"
 #include <cstddef>
 #include <cstdio>
 #include <string>
@@ -17,7 +18,17 @@ game::Tile::Tile(std::string spritePath, int x, int y, int rotation, TileType ti
     this->cost = cost;
     this->zone = zone;
 
-    this->rect = Rectangle {this->pos.x, this->pos.y, TILE_WIDTH, TILE_HEIGHT};
+    switch (this->tileType) {
+    case START:
+    case PRISON:
+    case AWARDS:
+    case POLICE:
+        this->rect = Rectangle {this->pos.x, this->pos.y, TILE_WIDTH*2, TILE_HEIGHT};
+        break;
+    case PROPERTY:
+        this->rect = Rectangle {this->pos.x, this->pos.y, TILE_WIDTH, TILE_HEIGHT};
+        break;
+    }
     this->rect = RotateRectangle(this->rect, this->rotation);
 
     this->updateTexture();
@@ -53,7 +64,7 @@ void game::Tile::draw() {
     DrawTextureEx(this->texture, this->pos, this->rotation, 1.0f, WHITE);
 
     if (IsHovered(this->rect))
-        printf("HOVERING %s\n", this->spritePath.c_str());
+        game::hoverTile(this);
 };
 
 std::vector<game::Tile> game::getTiles() {

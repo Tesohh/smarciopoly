@@ -20,11 +20,13 @@ enum TileType {
 };
 
 struct Tile {
+    // Raylib specific fields
     Vector2 pos = {0, 0};
     uint32_t rotation = 0;
     Image sprite;
     std::string spritePath;
 
+    // Game Specific fields 
     TileType tileType = TileType::PROPERTY;
     uint32_t cost = 0;
     std::string zone = "";
@@ -36,10 +38,11 @@ struct Tile {
     void debugPrint();
 
     Tile(std::string spritePath, int x, int y, int rotation, TileType tileType, uint32_t cost, std::string zone);
-    
+
+    // Generated fields 
     Texture2D texture;
+    Rectangle rect;
     private: 
-        Rectangle rect;
         Image editedImage;
 };
 

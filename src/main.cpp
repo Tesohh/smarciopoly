@@ -35,12 +35,6 @@ int main(void) {
     game::state.map.tiles = game::getTiles();
     game::state.map.init();
 
-
-
-    Rectangle test = Rectangle {0, 0, 100, 200};
-    Rectangle rota = RotateRectangle(test, 180);
-    TraceLog(LOG_INFO, "x%f y%f w%f h%f", rota.x, rota.y, rota.width, rota.height);
-
     while (!WindowShouldClose()){
         if (IsWindowResized()) game::state.camera.normalize();
         game::state.camera.update(GetFrameTime());
