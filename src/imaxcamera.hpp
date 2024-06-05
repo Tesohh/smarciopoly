@@ -5,10 +5,10 @@
 namespace game {
     #define CAMERA_MOVE_ACCELERATION 0.8f
     #define CAMERA_ZOOM_ACCELERATION 0.8f
-//    #define CAMERA_ROTATION_ACCELERATION 0.8f
+    #define CAMERA_ROTATION_ACCELERATION 0.1f
     #define CAMERA_MOVE_MIN 2
     #define CAMERA_ZOOM_MIN 0.5f
-//    #define CAMERA_ROTATION_MIN 0.1f
+    #define CAMERA_ROTATION_MIN 0.5f
     #define CAMERA_DEFAULT_SPEED 10
 
     enum ImaxCameraMode {
@@ -29,7 +29,7 @@ namespace game {
         Vector2 nominalSize;
         Vector2 scaleFactor;
         float targetZoom;
-//        float targetRotation;
+        float targetRotation;
         float speed;
 
         float getNormalizedZoom();

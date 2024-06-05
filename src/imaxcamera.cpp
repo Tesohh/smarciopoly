@@ -34,8 +34,7 @@ void game::ImaxCamera::normalize() {
     Vector2 screenCenter = (Vector2){GetScreenWidth()/2.0f, GetScreenHeight()/2.0f};
 
     this->offset = screenCenter;
-    this->target = mapCenter;
-    this->followee = target;
+    this->followee = mapCenter;
 
     this->targetZoom = this->getNormalizedZoom();
 }
@@ -43,12 +42,10 @@ void game::ImaxCamera::normalize() {
 void game::ImaxCamera::rotate(int direction) {
     switch (direction) {
         case CLOCKWISE:
-//            this->targetRotation +=90;
-            this->rotation +=90;
+            this->targetRotation += 90;
             break;
         case ANTICLOCKWISE:
-//            this->targetRotation -= 90;
-            this->rotation -=90;
+            this->targetRotation -= 90;
             break;
         default:
             break;
@@ -61,10 +58,10 @@ void game::ImaxCamera::update(float delta) {
             break;
         case game::ImaxCameraMode::DRAMATIC_FOLLOW:
             Vector2 posDiff = Vector2Subtract(this->followee, this->target);
-//            float rotDiff = abs(targetRotation - rotation);
             float posDistance = Vector2Length(posDiff);
 
             float zoomDiff = this->targetZoom - this->zoom;
+            float rotDiff = this->targetRotation - this->rotation;
 
             if (posDistance > 0) {
                 float posSpeed = fmaxf(CAMERA_MOVE_ACCELERATION*posDistance, CAMERA_MOVE_MIN) * delta * speed;
@@ -77,12 +74,13 @@ void game::ImaxCamera::update(float delta) {
                 this->zoom += zoomDiff * zoomSpeed;
             }
 
-            /*
-            if(rotDiff > 0) {
+            // TODO: Figure out why rotating CLOCKWISE makes the camera kind of turn twice
+            // my guess is it has something to do with the fact that rotDiff is negative or positive
+            // after the animation the camera is in the right rotation but it still looks weird you know
+            if(rotDiff != 0) {
                 float rotSpeed = fmaxf(CAMERA_ROTATION_ACCELERATION*rotDiff, CAMERA_ROTATION_MIN) * delta * speed;
                 this->rotation += rotDiff * rotSpeed;
             }
-            */
             break;
     }
 }

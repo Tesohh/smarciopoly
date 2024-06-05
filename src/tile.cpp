@@ -19,10 +19,7 @@ game::Tile::Tile(std::string spritePath, int x, int y, int rotation, TileType ti
     this->zone = zone;
 
     switch (this->tileType) {
-    case START:
-    case PRISON:
-    case AWARDS:
-    case POLICE:
+    case START: case PRISON: case AWARDS: case POLICE:
         this->rect = Rectangle {this->pos.x, this->pos.y, TILE_WIDTH*2, TILE_HEIGHT};
         break;
     case PROPERTY:
