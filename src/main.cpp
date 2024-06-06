@@ -1,3 +1,4 @@
+#include "ui.hpp"
 #include "hover.hpp"
 #include "imaxcamera.hpp"
 #include "raylib.h"
@@ -68,6 +69,7 @@ int main(void) {
                 tile.draw();
             }
 
+            ui::drawBorderRect(Rectangle{100,100,66, 87}, RED);
             DrawFPS(-500, -500);
         }
         EndMode2D();
