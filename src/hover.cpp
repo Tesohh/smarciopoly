@@ -1,6 +1,8 @@
 #include "hover.hpp"
 #include "raylib.h"
 #include "state.hpp"
+#include "ui.hpp"
+
 
 bool IsHovered(Rectangle rect) {
     if (!IsCursorOnScreen()) return false;
@@ -14,6 +16,20 @@ bool IsHovered(Rectangle rect) {
     return xMatch && yMatch;
 }
 
+Rectangle hoverCardRect = {
+    .x = 2550,
+    .y = 2250,
+    .width = 785,
+    .height = 1176,
+};
+
 void game::hoverTile(Tile *tile) {
     DrawRectangleRec(tile->rect, GetColor(0xffffff44));
+
+    switch (tile->tileType) {
+    case START: case PRISON: case AWARDS: case POLICE:
+        break;
+    case PROPERTY:
+        ui::drawBorderRect(hoverCardRect, WHITE);
+    }
 }
