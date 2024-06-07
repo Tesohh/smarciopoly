@@ -17,6 +17,8 @@ enum TileType {
     AWARDS,
     POLICE,
     PROPERTY,
+    CHANCE,
+    PROBABILITY,
 };
 
 struct Tile {
@@ -27,6 +29,7 @@ struct Tile {
     std::string spritePath;
 
     // Game Specific fields 
+    std::string name;
     TileType tileType = TileType::PROPERTY;
     uint32_t cost = 0;
     std::string zone = "";
@@ -37,17 +40,20 @@ struct Tile {
     void updateTexture();
     void debugPrint();
 
-    Tile(std::string spritePath, int x, int y, int rotation, TileType tileType, uint32_t cost, std::string zone);
+    Tile(std::string spritePath, int x, int y, int rotation, TileType tileType, uint32_t cost, std::string zone, std::string name);
 
     // Generated fields 
     Texture2D texture;
     Rectangle rect;
+    Color color;
     private: 
         Image editedImage;
 };
 
 // returns the 32 tiles
 std::vector<Tile> getTiles();
+
+Color getColorFromZone(std::string zone);
 
 }
 #endif

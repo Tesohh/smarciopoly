@@ -1,6 +1,6 @@
 COMPILER ?= g++
 DEBUGGER = gdb
-CFLAGS = -std=c++14 -Wall -Wno-missing-braces
+CFLAGS = -std=c++14 -Wall -Wno-missing-braces -Wno-unused-command-line-argument
 LIBINCLUDE = 
 
 ifeq ($(OS),Windows_NT)

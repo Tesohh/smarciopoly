@@ -1,5 +1,7 @@
 #include "smarciomath.hpp"
+#include "raylib.h"
 #include <cmath>
+#include <string>
 
 Rectangle RotateRectangle(Rectangle rectangle, float rotation) {
     float rad = rotation * DEG2RAD; 
@@ -34,3 +36,6 @@ Rectangle RotateRectangle(Rectangle rectangle, float rotation) {
     return boundingRect;
 }
 
+void DebugRectangle(Rectangle r, std::string prefix) {
+    TraceLog(LOG_INFO, "%s x=%f y=%f width=%f height=%f", prefix.c_str(), r.x, r.y, r.width, r.height);
+}

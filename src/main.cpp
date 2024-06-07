@@ -69,12 +69,10 @@ int main(void) {
                 tile.draw();
             }
 
-            ui::drawBorderRect(Rectangle{100, 100, 500, 100}, RED);
             DrawFPS(-500, -500);
         }
         EndMode2D();
         EndDrawing();
-
     }
 
     UnloadTexture(bg);

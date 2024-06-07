@@ -7,8 +7,8 @@
 // Returns true if the cursor is in the bounds of the rectangle. Relies on the game::state.camera
 bool IsHovered(Rectangle rect);
 
-namespace game {
-    void hoverTile(Tile *tile);
+namespace ui {
+    void hoverTile(game::Tile *tile);
 }
 
 #endif
