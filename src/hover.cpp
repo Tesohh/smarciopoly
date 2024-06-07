@@ -33,6 +33,29 @@ Rectangle nameTagRect = {
     .height = 164,
 };
 
+Rectangle infoBoxRect = {
+    .x = 2609,
+    .y = 2490,
+    .width = 668,
+    .height = 570,
+};
+
+Rectangle button1Rect = {
+    .x = 2609,
+    .y = 3080,
+    .width = 668,
+    .height = 124,
+};
+
+Rectangle button2Rect = {
+    .x = 2609,
+    .y = 3230,
+    .width = 668,
+    .height = 124,
+};
+
+void noop_button_callback() {}
+
 void ui::hoverTile(game::Tile *tile) {
     DrawRectangleRec(tile->rect, GetColor(0xffffff44));
 
@@ -47,6 +70,12 @@ void ui::hoverTile(game::Tile *tile) {
     }
 
     ui::drawBorderRect(hoverCardRect, RAYWHITE);
+
     ui::drawBorderRect(nameTagRect, game::getColorFromZone(tile->zone));
     ui::drawHorizontallyCenteredText(nameTagRect, 2326, tile->name, game::fonts.uiFont, 128, WHITE);
+
+    ui::drawBorderRect(infoBoxRect, RAYWHITE);
+
+    ui::drawButton(button1Rect, "Bottone 1", game::fonts.uiFont, 96, GetColor(0xEA2424FF), BLACK, &noop_button_callback);
+    ui::drawButton(button2Rect, "Bottone 2", game::fonts.uiFont, 96, GetColor(0x27AE60FF), BLACK, &noop_button_callback);
 }

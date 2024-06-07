@@ -16,15 +16,15 @@ void ui::drawBorderRect(Rectangle rect, Color color, int borderWidth) {
 
 void ui::drawCenteredText(Rectangle rect, std::string str, Font font, float fontSize, Color tint) {
     Vector2 size = MeasureTextEx(font, str.c_str(), fontSize, TEXT_DEFAULT_SPACING);
-    float x =  rect.width/2 - size.x/2;
-    float y = rect.height/2 - size.y/2;
+    float x =  rect.width/2 - size.x/2 + rect.x;
+    float y = rect.height/2 - size.y/2 + rect.y;
 
     DrawTextEx(font, str.c_str(), {x, y}, fontSize, TEXT_DEFAULT_SPACING, tint);
 }
 
 void ui::drawVerticallyCenteredText(Rectangle rect, float x, std::string str, Font font, float fontSize, Color tint) {
     Vector2 size = MeasureTextEx(font, str.c_str(), fontSize, TEXT_DEFAULT_SPACING);
-    float y = rect.height/2 - size.y/2;
+    float y = rect.height/2 - size.y/2 + rect.y;
 
     DrawTextEx(font, str.c_str(), {x, y}, fontSize, TEXT_DEFAULT_SPACING, tint);
 }
@@ -35,3 +35,9 @@ void ui::drawHorizontallyCenteredText(Rectangle rect, float y, std::string str, 
 
     DrawTextEx(font, str.c_str(), {x, y}, fontSize, TEXT_DEFAULT_SPACING, tint);
 }
+
+void ui::drawButton(Rectangle rect, std::string str, Font font, float fontSize, Color buttonTint, Color textTint, std::function<void()> callback) {
+    drawBorderRect(rect, buttonTint);
+    drawCenteredText(rect, str, font, fontSize, textTint);
+}
+
