@@ -1,7 +1,5 @@
 #include "ui.hpp"
 #include "raylib.h"
-#include "smarciomath.hpp"
-#include <cstdio>
 #include <string>
 
 void ui::drawBorderRect(Rectangle rect, Color color, int borderWidth) {

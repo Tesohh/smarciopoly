@@ -3,7 +3,7 @@
 
 void game::_FontAssets::init() {
     TraceLog(LOG_INFO, "Loading fonts...");
-    game::fonts.uiFont = LoadFont("resources/fonts/karantina.ttf");
+    game::fonts.uiFont = LoadFontEx("resources/fonts/karantina.ttf", 128, 0, 250);
 }
 void game::_FontAssets::deinit() {
     TraceLog(LOG_INFO, "Unloading fonts...");
