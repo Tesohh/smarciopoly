@@ -10,6 +10,9 @@ namespace game {
         ImaxCamera camera;
         Map map;
         
+        Tile* hoveredTile;
+        bool isTileHoverLocked;
+        
         _State();
         void deinit();
     };

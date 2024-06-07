@@ -3,6 +3,7 @@
 #include "hover.hpp"
 #include "raylib.h"
 #include "smarciomath.hpp"
+#include "state.hpp"
 #include <cstddef>
 #include <cstdio>
 #include <stdexcept>
@@ -63,8 +64,17 @@ void game::Tile::updateTexture() {
 void game::Tile::draw() {
     DrawTextureEx(this->texture, this->pos, this->rotation, 1.0f, WHITE);
 
-    if (IsHovered(this->rect))
-        ui::hoverTile(this);
+    if (IsHovered(this->rect)) {
+        if (!game::state.isTileHoverLocked) game::state.hoveredTile = this;
+
+        if (IsMouseButtonReleased(MOUSE_LEFT_BUTTON)) {
+            if (game::state.hoveredTile == this) game::state.isTileHoverLocked = !game::state.isTileHoverLocked;
+            else {
+                game::state.hoveredTile = this;
+                game::state.isTileHoverLocked = true;
+            }
+        }
+    }
 };
 
 std::vector<game::Tile> game::getTiles() {

@@ -76,6 +76,10 @@ void ui::hoverTile(game::Tile *tile) {
 
     ui::drawBorderRect(infoBoxRect, RAYWHITE);
 
-    ui::drawButton(button1Rect, "Bottone 1", game::fonts.uiFont, 96, GetColor(0xEA2424FF), BLACK, &noop_button_callback);
-    ui::drawButton(button2Rect, "Bottone 2", game::fonts.uiFont, 96, GetColor(0x27AE60FF), BLACK, &noop_button_callback);
+    if (game::state.isTileHoverLocked) {
+        ui::drawButton(button1Rect, "Bottone 1", game::fonts.uiFont, 96, GetColor(0xEA2424FF), BLACK, &noop_button_callback);
+        ui::drawButton(button2Rect, "Bottone 2", game::fonts.uiFont, 96, GetColor(0x27AE60FF), BLACK, &noop_button_callback);
+    } else {
+        ui::drawHorizontallyCenteredText(hoverCardRect, 3175, "Click per interagire", game::fonts.uiFont, 96, GRAY);
+    }
 }

@@ -69,6 +69,11 @@ int main(void) {
                 tile.draw();
             }
 
+            if (game::state.hoveredTile != nullptr)
+                ui::hoverTile(game::state.hoveredTile);
+            if (!game::state.isTileHoverLocked) // this is done to hide the hoverTile
+                game::state.hoveredTile = nullptr;
+
             DrawFPS(-500, -500);
         }
         EndMode2D();

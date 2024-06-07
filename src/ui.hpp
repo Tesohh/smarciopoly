@@ -7,7 +7,7 @@
 #include <string>
 
 #define RECTANGLE_DEFAULT_BORDER 16
-#define TEXT_DEFAULT_SPACING 4
+#define TEXT_DEFAULT_SPACING 1
 
 namespace ui {
 void drawBorderRect(Rectangle rect, Color color, int borderWidth = RECTANGLE_DEFAULT_BORDER);
