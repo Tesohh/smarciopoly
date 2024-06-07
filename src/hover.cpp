@@ -54,7 +54,9 @@ Rectangle button2Rect = {
     .height = 124,
 };
 
-void noop_button_callback() {}
+void noop_button_callback() {
+    TraceLog(LOG_INFO, "BUTTONPRESSED");
+}
 
 void ui::hoverTile(game::Tile *tile) {
     DrawRectangleRec(tile->rect, GetColor(0xffffff44));

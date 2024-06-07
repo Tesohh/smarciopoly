@@ -1,4 +1,5 @@
 #include "ui.hpp"
+#include "hover.hpp"
 #include "raylib.h"
 #include <string>
 
@@ -39,5 +40,15 @@ void ui::drawHorizontallyCenteredText(Rectangle rect, float y, std::string str, 
 void ui::drawButton(Rectangle rect, std::string str, Font font, float fontSize, Color buttonTint, Color textTint, std::function<void()> callback) {
     drawBorderRect(rect, buttonTint);
     drawCenteredText(rect, str, font, fontSize, textTint);
+
+    bool isHovered = IsHovered(rect);
+
+     if (isHovered && IsMouseButtonDown(MOUSE_BUTTON_LEFT)) {
+        DrawRectangleRec(rect, GetColor(0x00000055));
+    } else if (isHovered && IsMouseButtonReleased(MOUSE_BUTTON_LEFT)) {
+        callback();
+    } else if (isHovered) {
+        DrawRectangleRec(rect, GetColor(0xFFFFFF55));
+    }
 }
 
