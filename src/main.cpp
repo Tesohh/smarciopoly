@@ -22,6 +22,7 @@ int main(void) {
     SetTargetFPS(60);
 
     game::fonts.init();
+    game::sprites.init();
 
     Texture2D bg = LoadTexture("resources/bg.png");
 
@@ -82,6 +83,7 @@ int main(void) {
 
     UnloadTexture(bg);
     game::fonts.deinit();
+    game::sprites.deinit();
     game::state.deinit();
 
     CloseWindow();

@@ -2,6 +2,7 @@
 #define ASSETS_HPP
 
 #include "raylib.h"
+#include <vector>
 namespace game {
     struct _FontAssets {
         Font uiFont; 
@@ -11,7 +12,15 @@ namespace game {
         void deinit();
     };
 
+    struct _SpriteAssets {
+        std::vector<Image> figures; 
+
+        void init();
+        void deinit();
+    };
+
     extern _FontAssets fonts;
+    extern _SpriteAssets sprites;
 }
 
 #endif
