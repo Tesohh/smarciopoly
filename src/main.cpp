@@ -58,22 +58,24 @@ int main(void) {
     game::state.players.at(2).pos = {300, 100};
     game::state.players.at(3).pos = {400, 100};
     // :TEMP
+    
+    game::state.nextState = game::TurnState::NAME_BANNER;
 
     while (!WindowShouldClose()){
         if (IsWindowResized()) game::state.camera.normalize();
         game::state.camera.update(GetFrameTime());
 
-        // Game logic
-        game::state.timeSinceChange += GetFrameTime();
+        // State management 
+        game::state.secsSinceChange += GetFrameTime();
         if (game::state.nextState != game::TurnState::NOTHING) {
             game::state.currentState = game::state.nextState;
             game::state.nextState = game::TurnState::NOTHING;
-            game::state.timeSinceChange = 0;
+            game::state.secsSinceChange = 0;
             game::state.debug();
         }
 
-        // Input
 
+        // Input
         // TEMP:
         if (IsKeyPressed(KEY_G)) {
             game::state.camera.speed = 5;
@@ -92,7 +94,7 @@ int main(void) {
 
         if (IsKeyDown(KEY_R)) game::state.camera.normalize();
 
-        // Rendering
+        // Rendering && game logic
         BeginDrawing();
         BeginMode2D(game::state.camera);
         {
@@ -111,6 +113,15 @@ int main(void) {
 
             for (game::Player& player : game::state.players)
                 player.run();
+
+            switch (game::state.currentState) {
+            case game::NOTHING: break;
+            case game::DICE: break;
+            case game::DRAMATIC_ANIMATION: break;
+            case game::BUYING_PROPERTY: break;
+            case game::PAYING_ENEMY: break;
+            case game::SELLING_PROPERTIES: break;
+            }
 
             if (game::state.hoveredTile != nullptr)
                 ui::hoverTile(game::state.hoveredTile);

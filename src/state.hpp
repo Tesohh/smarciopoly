@@ -7,9 +7,8 @@
 #include <cstdint>
 
 namespace game {
-enum TurnState {
+enum TurnState : uint8_t {
     NOTHING, // currentState can never be NOTHING except for at the start of the game 
-    NAME_BANNER,
     DICE,
     DRAMATIC_ANIMATION,
     BUYING_PROPERTY,
@@ -25,7 +24,7 @@ struct _State {
     uint8_t currentPlayer;
     TurnState currentState;
     TurnState nextState;
-    float timeSinceChange;
+    float secsSinceChange; // PROTIP: if it's at 0 you know it's the first cycle inside that state
     
     Tile* hoveredTile;
     bool isTileHoverLocked;
