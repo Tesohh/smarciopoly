@@ -2,6 +2,7 @@
 #include "assets.hpp"
 #include "hover.hpp"
 #include "raylib.h"
+#include "raymath.h"
 #include "smarciomath.hpp"
 #include "state.hpp"
 #include <cstddef>
@@ -76,6 +77,12 @@ void game::Tile::draw() {
         }
     }
 };
+
+Vector2 game::Tile::getCenter() {
+    Vector2 addendum = Vector2 {this->rect.width/2, this->rect.height/2};
+    if (this->rect.width > this->rect.height) addendum = Vector2Negate(addendum);
+    return Vector2Add(this->pos, addendum);
+}
 
 std::vector<game::Tile> game::getTiles() {
     std::vector<game::Tile> tiles = {

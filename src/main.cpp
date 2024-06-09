@@ -1,3 +1,4 @@
+#include "player.hpp"
 #include "ui.hpp"
 #include "hover.hpp"
 #include "imaxcamera.hpp"
@@ -37,12 +38,24 @@ int main(void) {
     game::state.map.tiles = game::getTiles();
     game::state.map.init();
 
+    for (int i = 0; i < 4; i++) {
+        game::state.players.push_back(game::Player());
+        game::state.players.at(i).init(i);
+    }
+
+    // TEMP:
+    game::state.players.at(0).pos = {100, 100};
+    game::state.players.at(1).pos = {200, 100};
+    game::state.players.at(2).pos = {300, 100};
+    game::state.players.at(3).pos = {400, 100};
+    // :TEMP
+
     while (!WindowShouldClose()){
         if (IsWindowResized()) game::state.camera.normalize();
         game::state.camera.update(GetFrameTime());
         if (IsKeyPressed(KEY_G)) {
             game::state.camera.speed = 5;
-            game::state.camera.followee = Vector2Add(game::state.map.tiles.at(8).pos, Vector2 {TILE_WIDTH, TILE_HEIGHT/2});
+            game::state.camera.followee = game::state.map.tiles.at(6).getCenter();
             game::state.camera.targetZoom = 1.2f;
         }
         if (IsKeyDown(KEY_J)) game::state.camera.followee.x -= 100;
@@ -70,6 +83,9 @@ int main(void) {
                 tile.draw();
             }
 
+            for (game::Player& player : game::state.players)
+                player.run();
+
             if (game::state.hoveredTile != nullptr)
                 ui::hoverTile(game::state.hoveredTile);
             if (!game::state.isTileHoverLocked) // this is done to hide the hoverTile
@@ -85,6 +101,10 @@ int main(void) {
     game::fonts.deinit();
     game::sprites.deinit();
     game::state.deinit();
+
+    for (game::Player& player : game::state.players) {
+        player.deinit();
+    }
 
     CloseWindow();
     return 0;

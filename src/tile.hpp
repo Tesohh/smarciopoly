@@ -39,6 +39,7 @@ struct Tile {
     void draw();
     void updateTexture();
     void debugPrint();
+    Vector2 getCenter();
 
     Tile(std::string spritePath, int x, int y, int rotation, TileType tileType, uint32_t cost, std::string zone, std::string name);
 
