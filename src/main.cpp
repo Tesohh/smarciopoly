@@ -22,6 +22,11 @@ int main(void) {
     InitWindow(1080, 720, "Smarciopoly");
     SetTargetFPS(60);
 
+    #ifdef DEVBUILD
+        SetTraceLogLevel(LOG_DEBUG);
+    #endif
+
+
     game::fonts.init();
     game::sprites.init();
 
@@ -50,9 +55,21 @@ int main(void) {
     game::state.players.at(3).pos = {400, 100};
     // :TEMP
 
+    TraceLog(LOG_DEBUG, "---- SMARCIOPOLY v0.1 [DEV BUILD] ----");
+
     while (!WindowShouldClose()){
         if (IsWindowResized()) game::state.camera.normalize();
         game::state.camera.update(GetFrameTime());
+
+        // Game logic
+        game::state.timeSinceChange += GetFrameTime();
+        if (game::state.nextState != game::TurnState::NOTHING) {
+            game::state.currentState = game::state.nextState;
+            game::state.nextState = game::TurnState::NOTHING;
+            game::state.timeSinceChange = 0;
+        }
+
+        // Input
         if (IsKeyPressed(KEY_G)) {
             game::state.camera.speed = 5;
             game::state.camera.followee = game::state.map.tiles.at(1).getCenter();
@@ -67,6 +84,8 @@ int main(void) {
         if (IsKeyPressed(KEY_Q)) game::state.camera.rotate(game::ANTICLOCKWISE);
 
         if (IsKeyDown(KEY_R)) game::state.camera.normalize();
+
+        // Rendering
         BeginDrawing();
         BeginMode2D(game::state.camera);
         {

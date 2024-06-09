@@ -35,8 +35,11 @@ ifeq ($(OS),Windows_NT)
 SRCS := $(wildcard src/*.cpp)
 OBJS := $(SRCS:.cpp=.o)
 
-all: $(TARGET) run clean
+all: setdev $(TARGET) run clean
 debug: $(TARGET) rungdb clean
+
+setdev:
+	$(eval CFLAGS += -DDEVBUILD)
 
 # Link the executable
 $(TARGET): $(OBJS)
@@ -46,11 +49,19 @@ $(TARGET): $(OBJS)
 src/%.o: src/%.cpp
 	$(COMPILER) $(LIBINCLUDE) $(LIBS) $(CFLAGS) -c $< -o $@
 
-clean:
-	rm -f $(OBJS) $(TARGET)
+cleanobj:
+	rm -f $(OBJS)
+
+cleanexe:
+	rm -f $(TARGET)
+
+clean: cleanobj cleanexe
 
 run:
 	./$(TARGET)
+
+
+build: $(TARGET) cleanobj
 
 rungdb:
 	$(DEBUGGER) ./$(TARGET)
