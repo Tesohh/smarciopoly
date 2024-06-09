@@ -80,7 +80,8 @@ void game::Tile::draw() {
 
 Vector2 game::Tile::getCenter() {
     Vector2 addendum = Vector2 {this->rect.width/2, this->rect.height/2};
-    if (this->rect.width > this->rect.height) addendum = Vector2Negate(addendum);
+    if (this->rotation == 90 || this->rotation == 180)  addendum = Vector2Negate(addendum);
+    // if (this->rect.width > this->rect.height) addendum = Vector2Negate(addendum);
     return Vector2Add(this->pos, addendum);
 }
 

@@ -55,7 +55,7 @@ int main(void) {
         game::state.camera.update(GetFrameTime());
         if (IsKeyPressed(KEY_G)) {
             game::state.camera.speed = 5;
-            game::state.camera.followee = game::state.map.tiles.at(6).getCenter();
+            game::state.camera.followee = game::state.map.tiles.at(1).getCenter();
             game::state.camera.targetZoom = 1.2f;
         }
         if (IsKeyDown(KEY_J)) game::state.camera.followee.x -= 100;
