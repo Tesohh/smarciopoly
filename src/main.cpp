@@ -8,6 +8,7 @@
 #include "map.hpp"
 #include "assets.hpp"
 #include "raymath.h"
+#include <cstdio>
 
 #define NOMINAL_WIDTH MAP_SIZE
 #define NOMINAL_HEIGHT MAP_SIZE
@@ -24,6 +25,9 @@ int main(void) {
 
     #ifdef DEVBUILD
         SetTraceLogLevel(LOG_DEBUG);
+    #endif
+    #ifndef DEVBUILD
+        SetTraceLogLevel(LOG_WARNING);
     #endif
 
 
@@ -55,8 +59,6 @@ int main(void) {
     game::state.players.at(3).pos = {400, 100};
     // :TEMP
 
-    TraceLog(LOG_DEBUG, "---- SMARCIOPOLY v0.1 [DEV BUILD] ----");
-
     while (!WindowShouldClose()){
         if (IsWindowResized()) game::state.camera.normalize();
         game::state.camera.update(GetFrameTime());
@@ -67,18 +69,23 @@ int main(void) {
             game::state.currentState = game::state.nextState;
             game::state.nextState = game::TurnState::NOTHING;
             game::state.timeSinceChange = 0;
+            game::state.debug();
         }
 
         // Input
+
+        // TEMP:
         if (IsKeyPressed(KEY_G)) {
             game::state.camera.speed = 5;
             game::state.camera.followee = game::state.map.tiles.at(1).getCenter();
             game::state.camera.targetZoom = 1.2f;
+            game::state.nextState = game::TurnState::DRAMATIC_ANIMATION;
         }
         if (IsKeyDown(KEY_J)) game::state.camera.followee.x -= 100;
         if (IsKeyDown(KEY_K)) game::state.camera.followee.y += 100;
         if (IsKeyDown(KEY_I)) game::state.camera.followee.y -= 100;
         if (IsKeyDown(KEY_L)) game::state.camera.followee.x += 100;
+        // :TEMP
 
         if (IsKeyPressed(KEY_E)) game::state.camera.rotate(game::CLOCKWISE);
         if (IsKeyPressed(KEY_Q)) game::state.camera.rotate(game::ANTICLOCKWISE);
