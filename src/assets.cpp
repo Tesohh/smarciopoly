@@ -33,7 +33,6 @@ void game::_SpriteAssets::deinit() {
     UnloadTexture(this->dice[3]);
     UnloadTexture(this->dice[4]);
     UnloadTexture(this->dice[5]);
-    UnloadTexture(this->dice[6]);
 }
 
 game::_SpriteAssets game::sprites;
