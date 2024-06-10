@@ -14,6 +14,7 @@ namespace game {
 
     struct _SpriteAssets {
         std::vector<Image> figures; 
+        Texture dice[6]; 
 
         void init();
         void deinit();

@@ -1,3 +1,4 @@
+#include "gamelogic.hpp"
 #include "player.hpp"
 #include "ui.hpp"
 #include "hover.hpp"
@@ -59,7 +60,7 @@ int main(void) {
     game::state.players.at(3).pos = {400, 100};
     // :TEMP
     
-    game::state.nextState = game::TurnState::NAME_BANNER;
+    game::state.nextState = game::TurnState::DICE;
 
     while (!WindowShouldClose()){
         if (IsWindowResized()) game::state.camera.normalize();
@@ -81,7 +82,6 @@ int main(void) {
             game::state.camera.speed = 5;
             game::state.camera.followee = game::state.map.tiles.at(1).getCenter();
             game::state.camera.targetZoom = 1.2f;
-            game::state.nextState = game::TurnState::DRAMATIC_ANIMATION;
         }
         if (IsKeyDown(KEY_J)) game::state.camera.followee.x -= 100;
         if (IsKeyDown(KEY_K)) game::state.camera.followee.y += 100;
@@ -116,7 +116,7 @@ int main(void) {
 
             switch (game::state.currentState) {
             case game::NOTHING: break;
-            case game::DICE: break;
+            case game::DICE: game::rollDice();
             case game::DRAMATIC_ANIMATION: break;
             case game::BUYING_PROPERTY: break;
             case game::PAYING_ENEMY: break;

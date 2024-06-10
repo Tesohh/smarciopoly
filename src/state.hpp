@@ -25,6 +25,8 @@ struct _State {
     TurnState currentState;
     TurnState nextState;
     float secsSinceChange; // PROTIP: if it's at 0 you know it's the first cycle inside that state
+
+    uint8_t diceValue[2];
     
     Tile* hoveredTile;
     bool isTileHoverLocked;
