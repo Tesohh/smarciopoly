@@ -36,3 +36,16 @@ void game::_SpriteAssets::deinit() {
 }
 
 game::_SpriteAssets game::sprites;
+
+void game::_SoundAssets::init() {
+    TraceLog(LOG_INFO, "Loading sounds...");
+    // this->bell = LoadSoundFromWave(LoadWave(""))
+    this->bell = LoadSound("resources/sounds/bell.wav");
+}
+
+void game::_SoundAssets::deinit() {
+    TraceLog(LOG_INFO, "Unloading sounds...");
+    UnloadSound(this->bell);
+}
+
+game::_SoundAssets game::sounds;

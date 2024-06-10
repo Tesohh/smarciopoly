@@ -20,8 +20,16 @@ namespace game {
         void deinit();
     };
 
+    struct _SoundAssets {
+        Sound bell;
+
+        void init();
+        void deinit();
+    };
+
     extern _FontAssets fonts;
     extern _SpriteAssets sprites;
+    extern _SoundAssets sounds;
 }
 
 #endif

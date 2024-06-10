@@ -22,6 +22,7 @@ int main(void) {
     SetConfigFlags(FLAG_MSAA_4X_HINT);
 
     InitWindow(1080, 720, "Smarciopoly");
+    InitAudioDevice();
     SetTargetFPS(60);
 
     #ifdef DEVBUILD
@@ -34,6 +35,7 @@ int main(void) {
 
     game::fonts.init();
     game::sprites.init();
+    game::sounds.init();
 
     Texture2D bg = LoadTexture("resources/bg.png");
 
@@ -137,6 +139,7 @@ int main(void) {
     UnloadTexture(bg);
     game::fonts.deinit();
     game::sprites.deinit();
+    game::sounds.deinit();
     game::state.deinit();
 
     for (game::Player& player : game::state.players) {
