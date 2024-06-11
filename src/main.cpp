@@ -117,6 +117,9 @@ int main(void) {
             for (game::Player& player : game::state.players)
                 player.run();
 
+            if (game::state.hoveredTile != nullptr)
+                ui::hoverTile(game::state.hoveredTile);
+
             switch (game::state.currentState) {
             case game::NOTHING: break;
             case game::DICE: game::rollDice(); break;
@@ -127,8 +130,6 @@ int main(void) {
             case game::SELLING_PROPERTIES: break;
             }
 
-            if (game::state.hoveredTile != nullptr)
-                ui::hoverTile(game::state.hoveredTile);
             if (!game::state.isTileHoverLocked) // this is done to hide the hoverTile
                 game::state.hoveredTile = nullptr;
 
