@@ -10,6 +10,7 @@ namespace game {
 enum TurnState : uint8_t {
     NOTHING, // currentState can never be NOTHING except for at the start of the game 
     DICE,
+    MOVING,
     DRAMATIC_ANIMATION,
     BUYING_PROPERTY,
     PAYING_ENEMY,

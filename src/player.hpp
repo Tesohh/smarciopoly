@@ -12,6 +12,8 @@ namespace game {
         std::vector<uint8_t> properties; // the indices of the tiles they possess pretty much
         int32_t coins; // not a uint as one can go negative and sell stuff
         
+        int currentTileIndex;
+        
         Vector2 pos;
         
         void init(uint8_t index);

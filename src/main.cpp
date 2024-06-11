@@ -74,6 +74,7 @@ int main(void) {
             game::state.currentState = game::state.nextState;
             game::state.nextState = game::TurnState::NOTHING;
             game::state.secsSinceChange = 0;
+            game::state.isTileHoverLocked = false;
             game::state.debug();
         }
 
@@ -118,7 +119,8 @@ int main(void) {
 
             switch (game::state.currentState) {
             case game::NOTHING: break;
-            case game::DICE: game::rollDice();
+            case game::DICE: game::rollDice(); break;
+            case game::MOVING: game::moveFigure(); break;
             case game::DRAMATIC_ANIMATION: break;
             case game::BUYING_PROPERTY: break;
             case game::PAYING_ENEMY: break;

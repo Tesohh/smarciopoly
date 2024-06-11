@@ -2,6 +2,7 @@
 #define GAMELOGIC_HPP
 namespace game {
 void rollDice();
+void moveFigure();
 }
 
 #endif
