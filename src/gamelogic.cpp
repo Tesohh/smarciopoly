@@ -1,8 +1,10 @@
 #include "gamelogic.hpp"
 #include "assets.hpp"
 #include "raylib.h"
+#include "raymath.h"
 #include "state.hpp"
 #include "uigame.hpp"
+#include <algorithm>
 #include <cmath>
 #include <cstdint>
 #include <cstdio>
@@ -55,9 +57,29 @@ void game::moveFigure() {
         return;
     }
     
+    float moveFactor = (state.secsSinceChange - lastExecutionTime) * 2;
+    moveFactor = Clamp(moveFactor, 0, 1);
+    Vector2 tile = state.map.tiles.at(player.currentTileIndex).getCenter();
+    Vector2 next = state.map.tiles.at(player.currentTileIndex+1).getCenter();
+
+    TraceLog(LOG_DEBUG, "%f", moveFactor);
+    player.pos.x = Lerp(tile.x - (FIGURE_WIDTH / 2), next.x - (FIGURE_WIDTH / 2), moveFactor);
+
+    // bounce!!!
+    if (moveFactor > 0.3 && moveFactor < 0.6) {
+        float y = tile.y - (FIGURE_HEIGHT / 2);
+        float normalized = (moveFactor - 0.3f) / 0.3f;
+        player.pos.y = Lerp(y, y - 200, normalized);
+    } else if (moveFactor > 0.6 && moveFactor < 0.9) {
+        float y = tile.y - (FIGURE_HEIGHT / 2);
+        float normalized = (moveFactor - 0.5f) / 0.3f;
+        player.pos.y = Lerp(y - 200, y, normalized);
+    }
+    
     if (state.secsSinceChange - lastExecutionTime > .5) {
         player.currentTileIndex += 1;
         Tile tile = state.map.tiles.at(player.currentTileIndex);
+        state.camera.speed = 40;
         state.camera.followee = tile.getCenter();
 
         lastExecutionTime = state.secsSinceChange;

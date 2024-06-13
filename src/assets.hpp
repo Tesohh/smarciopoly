@@ -12,6 +12,9 @@ namespace game {
         void deinit();
     };
 
+    
+    #define FIGURE_WIDTH 124.0f
+    #define FIGURE_HEIGHT 347.0f
     struct _SpriteAssets {
         std::vector<Image> figures; 
         Texture dice[6]; 
