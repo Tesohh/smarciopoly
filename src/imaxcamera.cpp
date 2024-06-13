@@ -42,12 +42,15 @@ void game::ImaxCamera::normalize() {
 void game::ImaxCamera::rotate(int direction) {
     switch (direction) {
         case CLOCKWISE:
+            this->currentRotationDirection = CLOCKWISE;
             this->targetRotation += 90;
             break;
         case ANTICLOCKWISE:
+            this->currentRotationDirection = ANTICLOCKWISE;
             this->targetRotation -= 90;
             break;
         default:
+            this->currentRotationDirection = 0;
             break;
     }
 }
@@ -78,7 +81,7 @@ void game::ImaxCamera::update(float delta) {
             // my guess is it has something to do with the fact that rotDiff is negative or positive
             // after the animation the camera is in the right rotation but it still looks weird you know
             if(rotDiff != 0) {
-                float rotSpeed = fmaxf(CAMERA_ROTATION_ACCELERATION*rotDiff, CAMERA_ROTATION_MIN) * delta * speed;
+                float rotSpeed = Clamp((CAMERA_ROTATION_ACCELERATION*rotDiff)/100, CAMERA_ROTATION_MIN, CAMERA_ROTATION_MAX) * delta * speed;
                 this->rotation += rotDiff * rotSpeed;
             }
             break;
