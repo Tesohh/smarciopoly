@@ -8,6 +8,7 @@
 #include <cmath>
 #include <cstdint>
 #include <cstdio>
+#include <cstdlib>
 
 // none of these functions run at the same time so
 // in theory you can use lastExecutionTime for any function???
@@ -66,15 +67,9 @@ void game::moveFigure() {
     player.pos.x = Lerp(tile.x - (FIGURE_WIDTH / 2), next.x - (FIGURE_WIDTH / 2), moveFactor);
 
     // bounce!!!
-    if (moveFactor > 0.3 && moveFactor < 0.6) {
-        float y = tile.y - (FIGURE_HEIGHT / 2);
-        float normalized = (moveFactor - 0.3f) / 0.3f;
-        player.pos.y = Lerp(y, y - 200, normalized);
-    } else if (moveFactor > 0.6 && moveFactor < 0.9) {
-        float y = tile.y - (FIGURE_HEIGHT / 2);
-        float normalized = (moveFactor - 0.5f) / 0.3f;
-        player.pos.y = Lerp(y - 200, y, normalized);
-    }
+    float y = tile.y - (FIGURE_HEIGHT / 2);
+    y = y - (300 * std::abs(std::sinf(Lerp(0, 90, moveFactor))));
+    player.pos.y = y;
     
     if (state.secsSinceChange - lastExecutionTime > .5) {
         player.currentTileIndex += 1;
