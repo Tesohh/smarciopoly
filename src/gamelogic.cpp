@@ -37,7 +37,7 @@ void game::rollDice() {
     ui::drawDice(dice2pos, game::state.diceValue[1]);
 }
 
-uint8_t playerTileBeforeMoving;
+int8_t playerTileBeforeMoving;
 void game::moveFigure() {
     Player& player = state.players.at(state.currentPlayer);
     uint8_t diceValue = state.diceValue[0] + state.diceValue[1];
@@ -51,10 +51,10 @@ void game::moveFigure() {
         state.camera.targetZoom = 0.5f;
     }
 
-    if (state.secsSinceChange < 1) return; // wait a second
-    
     if (diceValue + playerTileBeforeMoving <= player.currentTileIndex) {
-        state.nextState = game::TurnState::NOTHING; // TEMP
+        lastExecutionTime = 0;
+        state.camera.normalize();
+        state.nextState = game::TurnState::DICE; // TEMP
         return;
     }
     
@@ -63,16 +63,20 @@ void game::moveFigure() {
     Vector2 tile = state.map.tiles.at(player.currentTileIndex).getCenter();
     Vector2 next = state.map.tiles.at(player.currentTileIndex+1).getCenter();
 
-    TraceLog(LOG_DEBUG, "%f", moveFactor);
     player.pos.x = Lerp(tile.x - (FIGURE_WIDTH / 2), next.x - (FIGURE_WIDTH / 2), moveFactor);
 
     // bounce!!!
     float y = tile.y - (FIGURE_HEIGHT / 2);
-    y = y - (300 * std::abs(std::sinf(Lerp(0, 90, moveFactor))));
+    y = y - (300 * std::abs(std::cosf(Lerp(90, 180, moveFactor))));
     player.pos.y = y;
     
     if (state.secsSinceChange - lastExecutionTime > .5) {
         player.currentTileIndex += 1;
+        if (player.currentTileIndex > 30) {
+            player.currentTileIndex = 0;
+            playerTileBeforeMoving -= 31;
+            TraceLog(LOG_DEBUG, "diceValue:%d, playerTileBefore:%d, player.tile:%d", diceValue, playerTileBeforeMoving, player.currentTileIndex);
+        }
         Tile tile = state.map.tiles.at(player.currentTileIndex);
         state.camera.speed = 40;
         state.camera.followee = tile.getCenter();

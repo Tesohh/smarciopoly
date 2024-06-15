@@ -13,7 +13,7 @@ namespace game {
     };
 
     
-    #define FIGURE_WIDTH 124.0f
+    #define FIGURE_WIDTH 182.0f
     #define FIGURE_HEIGHT 347.0f
     struct _SpriteAssets {
         std::vector<Image> figures; 
