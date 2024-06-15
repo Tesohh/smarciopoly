@@ -1,5 +1,6 @@
 #include "gamelogic.hpp"
 #include "assets.hpp"
+#include "imaxcamera.hpp"
 #include "raylib.h"
 #include "raymath.h"
 #include "state.hpp"
@@ -47,13 +48,17 @@ void game::moveFigure() {
 
         // zom in the camera
         Tile tile = state.map.tiles.at(player.currentTileIndex);
+        state.camera.speed = 25;
         state.camera.followee = tile.getCenter();
+        state.camera.targetRotation = tile.rotation % 180 == 0 ? tile.rotation : tile.rotation + 180;
         state.camera.targetZoom = 0.5f;
     }
 
     if (diceValue + playerTileBeforeMoving <= player.currentTileIndex) {
         lastExecutionTime = 0;
         state.camera.normalize();
+        state.camera.speed = 25;
+        state.camera.targetRotation = 0;
         state.nextState = game::TurnState::DICE; // TEMP
         return;
     }
@@ -72,13 +77,15 @@ void game::moveFigure() {
     
     if (state.secsSinceChange - lastExecutionTime > .5) {
         player.currentTileIndex += 1;
-        if (player.currentTileIndex > 30) {
+        if (player.currentTileIndex > 30) { // overflow protection
             player.currentTileIndex = 0;
             playerTileBeforeMoving -= 31;
             TraceLog(LOG_DEBUG, "diceValue:%d, playerTileBefore:%d, player.tile:%d", diceValue, playerTileBeforeMoving, player.currentTileIndex);
         }
+
         Tile tile = state.map.tiles.at(player.currentTileIndex);
-        state.camera.speed = 40;
+        state.camera.speed = 25;
+        state.camera.targetRotation = tile.rotation % 180 == 0 ? tile.rotation : tile.rotation + 180;
         state.camera.followee = tile.getCenter();
 
         lastExecutionTime = state.secsSinceChange;
