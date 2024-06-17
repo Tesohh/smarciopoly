@@ -1,5 +1,6 @@
 #ifndef TILE_HPP
 #define TILE_HPP
+#include "player.hpp"
 #include "raylib.h"
 #include <cstdint>
 #include <string>

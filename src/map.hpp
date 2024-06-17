@@ -9,6 +9,7 @@ namespace game {
 struct Map {
     std::vector<Tile> tiles;
 
+    std::vector<Player*> getPlayersOnTile(int tileIndex);
     void init();
     void run();
 };

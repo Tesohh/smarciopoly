@@ -56,6 +56,17 @@ void game::moveFigure() {
 
     if (diceValue + playerTileBeforeMoving <= player.currentTileIndex) {
         lastExecutionTime = 0;
+
+        Tile tile = state.map.tiles.at(player.currentTileIndex);
+        player.pos = tile.getCenter();
+        player.pos.x -= player.texture.width/2.0;
+        player.pos.y -= player.texture.height/2.0;
+
+        // if multiple players are on the same tile, move me a bit down
+        auto players = state.map.getPlayersOnTile(player.currentTileIndex);
+        if (tile.rotation % 180 == 0) player.pos.y += (players.size()-1) * 100;
+        else player.pos.x += (players.size()-1) * 100;
+
         state.camera.normalize();
         state.camera.speed = 25;
         state.camera.targetRotation = 0;
@@ -65,15 +76,20 @@ void game::moveFigure() {
     
     float moveFactor = (state.secsSinceChange - lastExecutionTime) * 2;
     moveFactor = Clamp(moveFactor, 0, 1);
-    Vector2 tile = state.map.tiles.at(player.currentTileIndex).getCenter();
-    Vector2 next = state.map.tiles.at(player.currentTileIndex+1).getCenter();
+    Tile tile = state.map.tiles.at(player.currentTileIndex);
+    Vector2 tileCenter = tile.getCenter();
+    Tile next = state.map.tiles.at(player.currentTileIndex+1);
+    Vector2 nextCenter = next.getCenter();
 
-    player.pos.x = Lerp(tile.x - (FIGURE_WIDTH / 2), next.x - (FIGURE_WIDTH / 2), moveFactor);
-
-    // bounce!!!
-    float y = tile.y - (FIGURE_HEIGHT / 2);
-    y = y - (300 * std::abs(std::cosf(Lerp(90, 180, moveFactor))));
-    player.pos.y = y;
+    if (tile.rotation % 180 == 0) {
+        player.pos.x = Lerp(tileCenter.x - (FIGURE_WIDTH / 2), nextCenter.x - (FIGURE_WIDTH / 2), moveFactor);
+        float y = tileCenter.y - (FIGURE_HEIGHT / 2);
+        player.pos.y = y - (300 * std::abs(std::cosf(Lerp(90, 180, moveFactor))));
+    } else {
+        player.pos.y = Lerp(tileCenter.y - (FIGURE_HEIGHT / 2), nextCenter.y - (FIGURE_HEIGHT / 2), moveFactor);
+        float x = tileCenter.x - (FIGURE_WIDTH / 2);
+        player.pos.x = x - (300 * std::abs(std::cosf(Lerp(90, 180, moveFactor))));
+    }
     
     if (state.secsSinceChange - lastExecutionTime > .5) {
         player.currentTileIndex += 1;
